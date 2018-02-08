@@ -1,0 +1,24 @@
+html
+	head
+		style
+			include materialize/css/materialize.css
+		script
+			include sort.js
+		link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+	body
+		h1 Purdue University Salary Guide
+		h3 by The Exponent 
+		
+		table(id="myTable" class="highlight centered responsive-table")
+			thead
+				tr
+					th(onclick="sortTable(1)")= "Last Name"
+					th(onclick="sortTable(2)")= "First Name"
+					th(onclick="sortTable(3)")= "Department"
+					th= "Employee Group"
+					th= "compensation"
+			tbody
+				each item in list
+					tr
+						each x in item
+							td= x
