@@ -1,3 +1,16 @@
 body{
 	text-align: center;
 }
+div{
+	margin-left: 10%;
+	margin-right: 10%;
+}
+#title_div{
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+#table_div{
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-bottom: 5%;
+}

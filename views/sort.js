@@ -2,7 +2,7 @@ function sortTable(n){
 	var table, rows, switching, i, x, y, shouldSwitch;
 	table = document.getElementById("myTable");
 	switching = true;
-	console.log("hello");
+	console.log("Sorting");
 	while(switching){
 		switching = false;
 		rows = table.getElementsByTagName('tr');
@@ -12,12 +12,20 @@ function sortTable(n){
 			x = rows[i].getElementsByTagName("td")[n];
 			y = rows[i+1].getElementsByTagName("td")[n];
 
-			console.log(x.innerHTML);
-			console.log(y.innerHTML);
-
-			if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()){
-				shouldSwitch = true;
-				break;
+			// console.log(x.innerHTML);
+			// console.log(y.innerHTML);
+			if(n == 4){
+				var x_int = Number(x.innerHTML);
+				var y_int = Number(y.innerHTML);
+				if(x_int > y_int){
+					shouldSwitch = true;
+					break;
+				}
+			}else{
+				if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()){
+					shouldSwitch = true;
+					break;
+				}
 			}
 		}
 
