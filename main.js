@@ -22,7 +22,7 @@ app.get("/", function (req, res){
 			var list = [];
 			// console.log(err);
 			if(err) throw err;
-			for(var i = 0; i < 500; i++){
+			for(var i = 0; i < 50; i++){
 				row = result[i];
 				list.push([row.last_name, row.first_name, row.dept, row.employee_group, row.compensation]);
 			}
@@ -34,5 +34,7 @@ app.get("/", function (req, res){
 	// console.log(list);
 	// res.render('main', {description: 'saucy', list: list} )
 });
+
+app.get("/sort", function (req, res))
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
