@@ -80,12 +80,13 @@ app.get("/sort/salary", function (req, res){
 				row = result[i];
 				list.push([row.last_name, row.first_name, row.dept, row.employee_group, row.compensation]);
 			}
-
+			quickSort(list, 0, list.size()-1);
 			// list = [1, 2, 3];
 			res.render('main', {description: 'saucy', list: list} );
 			client.close();
 		});
-	});
+	});)
+
 	//sort the list
 	//render the motherfucking list
 });
