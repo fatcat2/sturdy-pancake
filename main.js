@@ -85,7 +85,7 @@ app.get("/sort/salary", function (req, res){
 			res.render('main', {description: 'saucy', list: list} );
 			client.close();
 		});
-	});)
+	});
 
 	//sort the list
 	//render the motherfucking list
