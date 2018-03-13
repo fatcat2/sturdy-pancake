@@ -42,6 +42,8 @@ function quickSort(arr, low, high){
 
 app.set('view engine', 'pug');
 
+app.use(express.static('public'));
+
 app.get("/", function (req, res){
 	MongoClient.connect(url, function(err, client){
 		assert.equal(null, err);
@@ -85,7 +87,7 @@ app.get("/sort/salary", function (req, res){
 			res.render('main', {description: 'saucy', list: list} );
 			client.close();
 		});
-	});
+	});	
 
 	//sort the list
 	//render the motherfucking list
