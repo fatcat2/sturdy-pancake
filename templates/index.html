@@ -17,40 +17,40 @@
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
 				<span class="mdl-layout-title">Purdue Exponent Salary Guide</span>
+			</div>
 		</header>
 		<div class="mdl-grid">
-		<div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
-			<table id="moneyTable" class="display">
-				<thead>
+			<div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+				<table id="moneyTable" class="display">
+					<thead>
+						<tr>
+							<th>Last Name</th>
+							<th>First Name</th>
+							<th>Employee Group</th>
+							<th>Department</th>
+							<th>Compensation</th>
+						</tr>
+					</thead>
+					{% for x in moneyList %}
 					<tr>
-						<th>Last Name</th>
-						<th>First Name</th>
-						<th>Employee Group</th>
-						<th>Department</th>
-						<th>Compensation</th>
+						<td>{{ x['last_name'] }}</td>
+						<td>{{ x['first_name'] }}</td>
+						<td>{{ x['employee_group'] }}</td> 
+						<td>{{ x['dept'] }}</td>
+						<td>{{ x['compensation'] }}</td>
 					</tr>
-				</thead>
-				{% for x in moneyList %}
-				<tr>
-					<td>{{ x['last_name'] }}</td>
-					<td>{{ x['first_name'] }}</td>
-					<td>{{ x['employee_group'] }}</td> 
-					<td>{{ x['dept'] }}</td>
-					<td>{{ x['compensation'] }}</td>
-				</tr>
-				{% endfor %}
-			</table>
+					{% endfor %}
+				</table>
+			</div>
 		</div>
-	</div>
-	</div>
-	
+	</div>	
+	<footer class="mdl-mini-footer">
+		<div class="mdl-mini-footer__left-section">
+			<div class="mdl-logo">Title</div>
+			<ul class="mdl-mini-footer__link-list">
+				<li><a href="#">Help</a></li>
+				<li><a href="#">About</a></li>
+			</ul>
+		</div>
+	</footer>
 </body>
-<footer class="mdl-mini-footer">
-	<div class="mdl-mini-footer__left-section">
-		<div class="mdl-logo">Title</div>
-		<ul class="mdl-mini-footer__link-list">
-			<li><a href="#">Help</a></li>
-			<li><a href="#">About</a></li>
-		</ul>
-	</div>
-</footer>
