@@ -5,7 +5,8 @@
 	<!-- Compiled and minified JavaScript -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
 	<script>
 		$(document).ready(function(){
@@ -14,26 +15,57 @@
 	</script>
 </head>
 <body>
-	<div class="container">
-		<table id="moneyTable"i class="display">
-			<thead>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Title</span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+				<!-- Navigation. We hide it in small screens. -->
+				<nav class="mdl-navigation mdl-layout--large-screen-only">
+					<a class="mdl-navigation__link" href="">Link</a>
+					<a class="mdl-navigation__link" href="">Link</a>
+					<a class="mdl-navigation__link" href="">Link</a>
+					<a class="mdl-navigation__link" href="">Link</a>
+				</nav>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Title</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div class="page-content"><!-- Your content goes here --></div>
+		</main>
+	</div>
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--6-col mdl-cell--3-offset">
+			<table id="moneyTable" class="display">
+				<thead>
+					<tr>
+						<th>Last Name</th>
+						<th>First Name</th>
+						<th>Employee Group</th>
+						<th>Department</th>
+						<th>Compensation</th>
+					</tr>
+				</thead>
+				{% for x in moneyList %}
 				<tr>
-					<th>Last Name</th>
-					<th>First Name</th>
-					<th>Employee Group</th>
-					<th>Department</th>
-					<th>Compensation</th>
+					<td>{{ x['last_name'] }}</td>
+					<td>{{ x['first_name'] }}</td>
+					<td>{{ x['employee_group'] }}</td> 
+					<td>{{ x['dept'] }}</td>
+					<td>{{ x['compensation'] }}</td>
 				</tr>
-			</thead>
-			{% for x in moneyList %}
-			<tr>
-				<td>{{ x['last_name'] }}</td>
-				<td>{{ x['first_name'] }}</td>
-				<td>{{ x['employee_group'] }}</td> 
-				<td>{{ x['dept'] }}</td>
-				<td>{{ x['compensation'] }}</td>
-			</tr>
-			{% endfor %}
-		</table>
+				{% endfor %}
+			</table>
+		</div>
 	</div>
 </body>
