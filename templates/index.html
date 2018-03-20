@@ -1,9 +1,33 @@
 <!doctype html>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+	 
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#moneyTable').DataTable();
+		});
+	</script>
+</head>
 <body>
-	<table>
-		{% for x in list %}
+	<table id="moneyTable"i class="display">
+		<thead>
+			<tr>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Employee Group</th>
+				<th>Department</th>
+				<th>Compensation</th>
+			</tr>
+		</thead>
+		{% for x in moneyList %}
 		<tr>
-			<td>{{ x }}</td>
+			<td>{{ x['last_name'] }}</td>
+			<td>{{ x['first_name'] }}</td>
+			<td>{{ x['employee_group'] }}</td> 
+			<td>{{ x['dept'] }}</td>
+			<td>{{ x['compensation'] }}</td>
 		</tr>
 		{% endfor %}
 	</table>

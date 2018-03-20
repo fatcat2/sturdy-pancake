@@ -10,4 +10,5 @@ def hello():
     collection = db.money
     money_list = list(collection.find())
     client.close()
+    print money_list[0]
     return render_template('index.html', moneyList=money_list)
