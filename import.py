@@ -1,10 +1,9 @@
-
+from pymongo.errors import BulkWriteError
 from  pymongo import MongoClient
 from openpyxl import Workbook
 from openpyxl import load_workbook
-client = MongoClient()
-
-client = MongoClient("mongodb://localhost:27017")
+import os
+client = MongoClient('mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test')
 
 db = client["test"]
 money = db.seventeen
@@ -17,19 +16,23 @@ print(sheet['B2'].value)
 
 data_list = []
 
-for row in sheet.iter_rows(min_row=2, min_col=1, max_row=1001, max_col=11):
-#    a = []
-    print row
-'''    for cell in row:
+for row in sheet.iter_rows(min_row=2, min_col=1, max_row=16695, max_col=11):
+    a = []
+    for cell in row:
         a.append(cell.value)
+    print type(a)
     post_data = {
-            'last_name': a[2],
-            'first_name': a[3],
+            'last_name': a[1],
+            'first_name': a[2],
             'middle_name': a[4],
-            'dept': a[5],
-            'employee_group': a[10],
-            'compensation': a[11]
+            'dept': a[4],
+            'city': a[6],
+            'employee_group': a[9],
+            'compensation': a[10]
             }
     data_list.append(post_data)
     #insert the entire fucking list yooooo
-    db.money.insert_many(data_list)'''
+try:
+    money.insert_many(data_list)
+except BulkWriteError as bwe:
+    print(bwe.details)
