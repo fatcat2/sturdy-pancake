@@ -1,4 +1,4 @@
-<!doctype html>
+<doctype html>
 <head>
 	<title>
 		Purdue Exponent Salary Guide
@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 	<!-- Including the datatables CSS -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 
 	<!-- Including the MDL CSS -->
@@ -19,6 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"/>
 
 	<!-- Including the datable JS file -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css">
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
 
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -33,6 +35,10 @@
 
 	<style type="text/css">
 		a.mdl-js-ripple-effect { position: relative; }
+	<style>
+		html{
+			/*overflow-y: hidden*/
+		}
 	</style>
 </head>
 
@@ -102,4 +108,42 @@
 			</div>
 		</main>
 	</div>	
+				<span class="mdl-layout-title">Purdue Exponent Salary Guide</span>
+			</div>
+		</header>
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+				<table id="moneyTable" class="display">
+					<thead>
+						<tr>
+							<th>Last Name</th>
+							<th>First Name</th>
+							<th>Employee Group</th>
+							<th>Department</th>
+							<th>Compensation</th>
+						</tr>
+					</thead>
+					{% for x in moneyList %}
+					<tr>
+						<td>{{ x['last_name'] }}</td>
+						<td>{{ x['first_name'] }}</td>
+						<td>{{ x['employee_group'] }}</td> 
+						<td>{{ x['dept'] }}</td>
+						<td>{{ x['compensation'] }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+			
+		<footer class="mdl-mini-footer">
+			<div class="mdl-mini-footer__left-section">
+				<div class="mdl-logo">Title</div>
+				<ul class="mdl-mini-footer__link-list">
+					<li><a href="#">Help</a></li>
+					<li><a href="#">About</a></li>
+				</ul>
+			</div>
+		</footer>
+	</div>
 </body>
