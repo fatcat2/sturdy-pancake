@@ -44,6 +44,7 @@
 
 <body class="mdl-color--grey-100">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
 		<header class="mdl-layout__header mdl-color--black">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
@@ -61,6 +62,7 @@
 
 			</div>
 		</header>
+
 		<main class="mdl-layout__content">
 			<div class="mdl-grid mdl-grid--no-spacing">
 				<div class="mdl-cell mdl-cell--12-col">
@@ -71,7 +73,6 @@
 				<div class="mdl-cell mdl-cell--2-col">
 				</div>
 				<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
-
 					<table id="moneyTable" class="display">
 						<thead>
 							<tr>
@@ -86,64 +87,16 @@
 						<tr>
 							<td>{{ x['last_name'] }}</td>
 							<td>{{ x['first_name'] }}</td>
-							<td>{{ x['employee_group'] }}</td> 
+							<td>{{ x['employee_group'] }}</td>
 							<td>{{ x['dept'] }}</td>
 							<td>{{ x['compensation'] }}</td>
 						</tr>
 						{% endfor %}
 					</table>
-
 				</div>
-
-
 				<div class="mdl-cell mdl-cell--2-col">
-					
-				</div>
-
-			</div>
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--12-col">
-					
 				</div>
 			</div>
 		</main>
-	</div>	
-				<span class="mdl-layout-title">Purdue Exponent Salary Guide</span>
-			</div>
-		</header>
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
-				<table id="moneyTable" class="display">
-					<thead>
-						<tr>
-							<th>Last Name</th>
-							<th>First Name</th>
-							<th>Employee Group</th>
-							<th>Department</th>
-							<th>Compensation</th>
-						</tr>
-					</thead>
-					{% for x in moneyList %}
-					<tr>
-						<td>{{ x['last_name'] }}</td>
-						<td>{{ x['first_name'] }}</td>
-						<td>{{ x['employee_group'] }}</td> 
-						<td>{{ x['dept'] }}</td>
-						<td>{{ x['compensation'] }}</td>
-					</tr>
-					{% endfor %}
-				</table>
-			</div>
-		</div>
-			
-		<footer class="mdl-mini-footer">
-			<div class="mdl-mini-footer__left-section">
-				<div class="mdl-logo">Title</div>
-				<ul class="mdl-mini-footer__link-list">
-					<li><a href="#">Help</a></li>
-					<li><a href="#">About</a></li>
-				</ul>
-			</div>
-		</footer>
 	</div>
 </body>
