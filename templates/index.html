@@ -90,7 +90,7 @@
 							<td>{{ x['first_name'] }}</td>
 							<td>{{ x['employee_group'] }}</td>
 							<td>{{ x['dept'] }}</td>
-							<td>{{ x['compensation'] }}</td>
+							<td>{{ "${:,.2f}".format(x['compensation']) }}</td>
 						</tr>
 						{% endfor %}
 					</table>
