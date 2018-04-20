@@ -30,3 +30,14 @@ def sixteen():
     client.close()
     print money_list[0]
     return render_template('index.html', downyear=2015, year=2016, moneyList=money_list)
+
+@app.route('/sport')
+def render_sport():
+    # url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
+    # client = MongoClient(url)
+    # db = client.test
+    # collection = db.sixteen
+    # money_list = list(collection.find())
+    # client.close()
+    # print money_list[0]
+    return render_template('sports.html')
