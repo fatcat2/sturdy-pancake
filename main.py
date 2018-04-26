@@ -31,6 +31,51 @@ def sixteen():
     print money_list[0]
     return render_template('index.html', downyear=2015, year=2016, moneyList=money_list)
 
+@app.route('/2014')
+def fourteen():
+    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
+    client = MongoClient(url)
+    db = client.test
+    collection = db.fourteen
+    money_list = list(collection.find())
+    client.close()
+    print money_list[0]
+    return render_template('index.html', downyear=2014, year=2014, moneyList=money_list)
+
+@app.route('/2011')
+def eleven():
+    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
+    client = MongoClient(url)
+    db = client.test
+    collection = db.eleven
+    money_list = list(collection.find())
+    client.close()
+    print money_list[0]
+    return render_template('index.html', downyear=2011, year=2011, moneyList=money_list)
+
+@app.route('/2012')
+def twelve():
+    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
+    client = MongoClient(url)
+    db = client.test
+    collection = db.twelve
+    money_list = list(collection.find())
+    client.close()
+    print money_list[0]
+    return render_template('index.html', downyear=2012, year=2012, moneyList=money_list)
+
+@app.route('/2013')
+def thirteen():
+    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
+    client = MongoClient(url)
+    db = client.test
+    collection = db.thirteen
+    money_list = list(collection.find())
+    client.close()
+    print money_list[0]
+    return render_template('index.html', downyear=2013, year=2013, moneyList=money_list)
+
+
 @app.route('/sport')
 def render_sport():
     # url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
