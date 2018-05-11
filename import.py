@@ -6,8 +6,8 @@ import os
 client = MongoClient('mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test')
 # added a test comment
 db = client["test"]
-money = db.sixteen
-wb = load_workbook(filename='2016.xlsx')
+money = db.fourteen
+wb = load_workbook(filename='2014.xlsx')
 print(wb.sheetnames)
 
 sheet = wb.active
@@ -16,7 +16,7 @@ print(sheet['B2'].value)
 
 data_list = []
 
-for row in sheet.iter_rows(min_row=2, min_col=3, max_row=12947, max_col=12):
+for row in sheet.iter_rows(min_row=2, min_col=3, max_row=16429, max_col=12):
     a = []
     for cell in row:
         a.append(cell.value)
