@@ -16384,6 +16384,6 @@
 		["Misiats","Oleksandr","Visiting Fac/Emeriti","WL - Mathematics","$54,001.77"],
 		["Quinlan","Robert","Visiting Fac/Emeriti","WL - Patti & Rusty Rueff","$56,457.27"],
 		["Szpruch Alpert","Daniel","Visiting Fac/Emeriti","WL - Mathematics","$38,724.88"],
-		["Vasher","Roy","Visiting Fac/Emeriti","WL - Department of Manage","$12,010.24"],
+		["Vasher","Roy","Visiting Fac/Emeriti","WL - Department of Manage","$12,010.24"]
 	]
 }
