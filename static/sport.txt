@@ -1,0 +1,13 @@
+{
+	"data":[
+		["Baseball", "Mark Wasikowski", "$187604.04"],
+		["Football", "Jeff Brohm", "$3,724,000.91"],
+		["Men's and Women's Cross Country/TF", "Lonnie Greene", "$289,329.10"],
+		["Men's Basketball", "Matt Painter" "$2,418,961.98"],
+		["Men's Golf", "Bob Bradley", "$150,023.00"],
+		["Men's Swimming", "Dan Ross", "$108,501.32"],
+		["Men's Tennis", "Pawel Gajdzik", "$106,644.98"],
+		["Soccer", "Drew Roff", "$154,836.80"],
+		["Softball", "Boo De Oliveira", "$127,551.92"],
+		["Volleyball", "Dave Shondell", "$259,784.41"]
+}

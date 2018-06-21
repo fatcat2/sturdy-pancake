@@ -8,8 +8,7 @@
 
 	<!-- Including the datatables CSS -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.material.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 
 	<!-- Including the MDL CSS -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
@@ -21,34 +20,28 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"/>
 
 	<!-- Including the datable JS file -->
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.material.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css">
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
 
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 	<script>
 		$(document).ready(function(){
 			$('#moneyTable').DataTable({
-				responsive: true,
-				ajax: "/static/{{ year }}.txt",
-				columnDefs: [
-					{
-						targets: [ 0, 1, 2 ],
-						className: 'mdl-data-table__cell--non-numeric'
-					}
-				]
+				'ajax': "static/ajax3.txt",
+				'deferRender': true
 			});
 		});
 	</script>
 
 	<style type="text/css">
-a.mdl-js-ripple-effect { position: relative; }
-<style>
-html{
-	/*overflow-y: hidden*/
-	/* another comment */
-}
-</style>
+		a.mdl-js-ripple-effect { position: relative; }
+	<style>
+		html{
+			/*overflow-y: hidden*/
+			/* another comment */
+		}
+	</style>
 </head>
 
 <body class="mdl-color--grey-100">
@@ -65,7 +58,7 @@ html{
 				<!-- Navigation on the left side -->
 				<nav class="mdl-navigation">
 					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/">2017</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2015">2015</a>
+					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2016">2015</a>
 					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2014">2014</a>
 					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2013">2013</a>
 					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2012">2012</a>
@@ -77,28 +70,30 @@ html{
 		</header>
 
 		<main class="mdl-layout__content">
-		<div class="mdl-grid mdl-grid--no-spacing">
-			<div class="mdl-cell mdl-cell--12-col">
-				<h1 style="text-align: center;">{{ year }}</h1>
+			<div class="mdl-grid mdl-grid--no-spacing">
+				<div class="mdl-cell mdl-cell--12-col">
+					<h1 style="text-align: center;">{{ year }}</h1>
+				</div>
 			</div>
-		</div>
-		<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
-			<div class="mdl-cell mdl-cell--2-col">
+			<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
+				<div class="mdl-cell mdl-cell--2-col">
+				</div>
+				<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+					<table id="moneyTable" class="display">
+						<thead>
+							<tr>
+								<th>Last Name</th>
+								<th>First Name</th>
+								<th>Employee Group</th>
+								<th>Department</th>
+								<th>Compensation</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="mdl-cell mdl-cell--2-col">
+				</div>
 			</div>
-			<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
-				<table id="moneyTable" class="mdl-data-table" style="width:100%">
-					<thead>
-						<tr>
-							<th>Last Name</th>
-							<th>First Name</th>
-							<th>Employee Group</th>
-							<th>Department</th>
-							<th>Compensation</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</div>
 		</main>
 	</div>
 </body>
