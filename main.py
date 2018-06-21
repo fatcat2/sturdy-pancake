@@ -1,5 +1,5 @@
 # imports are listed below
-from flask import Flask
+from flask import Flask, request, url_for
 import openpyxl as excel
 from pymongo import MongoClient
 from flask import render_template
@@ -8,81 +8,25 @@ import os
 # declare the flask app object
 app = Flask(__name__)
 
+# test route for the new ajax option
+@app.route('/dev')
+def dev():
+	print 'dev page has been accsessed'
+	return render_template('dev.html')
+
+@app.route('/data')
+def data():
+    x = request.values
+    for key,value in x.iteritems():
+        print key + ": " + value
+    return "lol"
+	
+
 # route makes it so when you go to that specific url it will render the index template
 @app.route('/')
 def hello():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.seventeen
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2016, year=2017, moneyList=money_list)
+    return render_template('index.html', year="2017" )
 
-@app.route('/2016')
-def sixteen():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.sixteen
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2015, year=2016, moneyList=money_list)
-
-@app.route('/2014')
-def fourteen():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.fourteen
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2014, year=2014, moneyList=money_list)
-
-@app.route('/2011')
-def eleven():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.eleven
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2011, year=2011, moneyList=money_list)
-
-@app.route('/2012')
-def twelve():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.twelve
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2012, year=2012, moneyList=money_list)
-
-@app.route('/2013')
-def thirteen():
-    url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    client = MongoClient(url)
-    db = client.test
-    collection = db.thirteen
-    money_list = list(collection.find())
-    client.close()
-    print money_list[0]
-    return render_template('index.html', downyear=2013, year=2013, moneyList=money_list)
-
-
-@app.route('/sport')
-def render_sport():
-    # url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
-    # client = MongoClient(url)
-    # db = client.test
-    # collection = db.sixteen
-    # money_list = list(collection.find())
-    # client.close()
-    # print money_list[0]
-    return render_template('sports.html')
+@app.route('/<page>')
+def not_current_year(page):
+    return render_template('index.html', year=page)
