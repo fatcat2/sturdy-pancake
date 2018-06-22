@@ -1,171 +1,122 @@
-<doctype html>
-<head>
-	<title>
-		Purdue Exponent Salary Guide
-	</title>
-	<!-- Including JQuery -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-	<!-- Including the datatables CSS -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-
-	<!-- Including the MDL CSS -->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
-
-	<!-- Including the Roboto font -->
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-
-	<!-- Including more datables CSS -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"/>
-
-	<!-- Including the datable JS file -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css">
-	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
-
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
-	<script>
-		$(document).ready(function(){
-			$('#moneyTable').DataTable({
-				responsive: true
-			});
+{% extends "base.html" %}
+{% block title %}Sports{% endblock %}
+{% block head %}
+<script>
+	$(document).ready(function(){
+		$('#moneyTable').DataTable({
+			responsive: true,
+			"columnDefs": [
+				{ "width": "20%", "targets": 0 }
+			]
 		});
-	</script>
+	});
+</script>
+<style type="text/css">
+	a.mdl-js-ripple-effect { position: relative; }
+</style>
+{% endblock %}
 
-	<style type="text/css">
-		a.mdl-js-ripple-effect { position: relative; }
-	<style>
-		html{
-			/*overflow-y: hidden*/
-			/* another comment */
-		}
-	</style>
-</head>
-
-<body class="mdl-color--grey-100">
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-		<header class="mdl-layout__header mdl-color--black">
-			<div class="mdl-layout__header-row">
-				<!-- Title -->
-				<span class="mdl-layout-title mdl-color-text--amber-300">Purdue Exponent Salary Guide</span>
-				<!-- Add spacer, to align navigation to the right -->
-				<!-- Navigation. We hide it in small screens. -->
-				<div class="mdl-layout-spacer"></div>
-
-				<!-- Navigation on the left side -->
-				<nav class="mdl-navigation">
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/">2017</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2016">2015</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2014">2014</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2013">2013</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2012">2012</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2011">2011</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/2016">Sports</a>
-				</nav>
-
-			</div>
-		</header>
-
-		<main class="mdl-layout__content">
-			<div class="mdl-grid mdl-grid--no-spacing">
-				<div class="mdl-cell mdl-cell--12-col">
-					<h1 style="text-align: center;">{{ year }}</h1>
-				</div>
-			</div>
-			<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
-				<div class="mdl-cell mdl-cell--2-col">
-				</div>
-				<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
-					<h1>2017 Boilermaker coach salaries</h1>
-					<table id="moneyTable" class="display">
-						<thead>
-							<tr>
-								<th>Sport</th>
-								<th>Name</th>
-								<th>Compensation</th>
-							</tr>
-						</thead>
-            <tr>
-							<td>Baseball</td>
-							<td>Mark Wasikowski</td>
-							<td>$187,604.04</td>
-						</tr>
-						<tr>
-							<td>Men's Basketball</td>
-							<td>Matt Painter</td>
-							<td>$2,418,961.98</td>
-						</tr>
-						<tr>
-							<td>Women's Basketball</td>
-							<td>Sharon Versyp</td>
-							<td>$739,513.49</td>
-						</tr>
-						<tr>
-							<td>Men's and Women's Cross Country/TF</td>
-							<td>Lonnie Greene</td>
-							<td>$289,329.10</td>
-						</tr>
-						<tr>
-							<td>Football</td>
-							<td>Jeff Brohm</td>
-							<td>$3,724,000.91</td>
-						</tr>
-						<tr>
-							<td>Men's Golf</td>
-							<td>Bob Bradley</td>
-							<td>$150,023.00</td>
-						</tr>
-						<tr>
-							<td>Women's Golf</td>
-							<td>Devin Brouse</td>
-							<td>$186,446.18</td>
-						</tr>
-						<tr>
-							<td>Soccer</td>
-							<td>Drew Roff</td>
-							<td>$154,836.80</td>
-						</tr>
-						<tr>
-							<td>Softball</td>
-							<td>Boo De Oliveira</td>
-							<td>$127,551.92</td>
-						</tr>
-						<tr>
-							<td>Men's Swimming</td>
-							<td>Dan Ross</td>
-							<td>$108,501.32</td>
-						</tr>
-						<tr>
-							<td>Women's Swimming</td>
-							<td>John Klinge</td>
-							<td>$110,422.18</td>
-						</tr>
-						<tr>
-							<td>Men's Tennis</td>
-							<td>Pawel Gajdzik</td>
-							<td>$106,644.98</td>
-						</tr>
-						<tr>
-							<td>Women's Tennis</td>
-							<td>Laura Glitz</td>
-							<td>$122,417.60</td>
-						</tr>
-						<tr>
-							<td>Volleyball</td>
-							<td>Dave Shondell</td>
-							<td>$259,784.41</td>
-						</tr>
-						<tr>
-							<td>Wrestling</td>
-							<td>Tony Ersland</td>
-							<td>$126,383.40
-					</table>
-				</div>
-				<div class="mdl-cell mdl-cell--2-col">
-				</div>
-			</div>
-		</main>
+{% block content %}
+<main class="mdl-layout__content">
+	<div class="mdl-grid mdl-grid--no-spacing">
+		<div class="mdl-cell mdl-cell--12-col">
+			<h1 style="text-align: center;">{{ year }}</h1>
+		</div>
 	</div>
-</body>
+	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
+		<div class="mdl-cell mdl-cell--2-col">
+		</div>
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+			<h1>2017 Boilermaker coach salaries</h1>
+			<table id="moneyTable" class="mdl-data-table" style="width:100%">
+				<thead>
+					<tr>
+						<th>Sport</th>
+						<th>Name</th>
+						<th>Compensation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Baseball</td>
+						<td>Mark Wasikowski</td>
+						<td>$187,604.04</td>
+					</tr>
+					<tr>
+						<td>Men's Basketball</td>
+						<td>Matt Painter</td>
+						<td>$2,418,961.98</td>
+					</tr>
+					<tr>
+						<td>Women's Basketball</td>
+						<td>Sharon Versyp</td>
+						<td>$739,513.49</td>
+					</tr>
+					<tr>
+						<td>Men's and Women's Cross Country/TF</td>
+						<td>Lonnie Greene</td>
+						<td>$289,329.10</td>
+					</tr>
+					<tr>
+						<td>Football</td>
+						<td>Jeff Brohm</td>
+						<td>$3,724,000.91</td>
+					</tr>
+					<tr>
+						<td>Men's Golf</td>
+						<td>Bob Bradley</td>
+						<td>$150,023.00</td>
+					</tr>
+					<tr>
+						<td>Women's Golf</td>
+						<td>Devin Brouse</td>
+						<td>$186,446.18</td>
+					</tr>
+					<tr>
+						<td>Soccer</td>
+						<td>Drew Roff</td>
+						<td>$154,836.80</td>
+					</tr>
+					<tr>
+						<td>Softball</td>
+						<td>Boo De Oliveira</td>
+						<td>$127,551.92</td>
+					</tr>
+					<tr>
+						<td>Men's Swimming</td>
+						<td>Dan Ross</td>
+						<td>$108,501.32</td>
+					</tr>
+					<tr>
+						<td>Women's Swimming</td>
+						<td>John Klinge</td>
+						<td>$110,422.18</td>
+					</tr>
+					<tr>
+						<td>Men's Tennis</td>
+						<td>Pawel Gajdzik</td>
+						<td>$106,644.98</td>
+					</tr>
+					<tr>
+						<td>Women's Tennis</td>
+						<td>Laura Glitz</td>
+						<td>$122,417.60</td>
+					</tr>
+					<tr>
+						<td>Volleyball</td>
+						<td>Dave Shondell</td>
+						<td>$259,784.41</td>
+					</tr>
+					<tr>
+						<td>Wrestling</td>
+						<td>Tony Ersland</td>
+						<td>$126,383.40</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="mdl-cell mdl-cell--2-col">
+		</div>
+	</div>
+</main>
+{% endblock %}

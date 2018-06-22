@@ -30,3 +30,9 @@ def hello():
 @app.route('/<page>')
 def not_current_year(page):
     return render_template('index.html', year=page)
+
+@app.route('/sports')
+def sports():
+    return render_template('sports.html')
+
+
