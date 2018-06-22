@@ -4,7 +4,7 @@ import os
 url = 'mongodb+srv://exponent_cand:'+os.environ.get('password')+'@cluster0-ufki0.mongodb.net/test'
 client = MongoClient(url)
 db = client.test
-collection = db.sixteen
+collection = db.seventeen
 money_list = list(collection.find())
 client.close()
 
