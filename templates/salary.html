@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}{{ data["first_name"] }} {{ data["last_name"] }}{% endblock %}
+{% block head %}
+<script>
+	$(document).ready(function(){
+		$('#moneyTable').DataTable({
+			responsive: true,
+			ajax: "/static/{{ year }}.txt",
+			columnDefs: [
+				{
+					targets: [ 0, 1, 2 ],
+					className: 'mdl-data-table__cell--non-numeric'
+				}
+			]
+		});
+	});
+</script>
+
+<style type="text/css">
+	a.mdl-js-ripple-effect { position: relative; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="mdl-layout__content">
+	<div class="mdl-grid mdl-grid--no-spacing">
+		<div class="mdl-cell mdl-cell--12-col">
+			<h1 style="text-align: center;">{{ year }}</h1>
+		</div>
+	</div>
+	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
+		<div class="mdl-cell mdl-cell--2-col">
+
+		</div>
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+			<table id="moneyTable" class="mdl-data-table" style="width:100%">
+				<thead>
+					<tr>
+						<th>Last Name</th>
+						<th>First Name</th>
+						<th>Employee Group</th>
+						<th>Department</th>
+						<th>Compensation</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="mdl-cell mdl-cell--2-col">
+			<!-- Simple list -->
+			<style>
+			.demo-list-item {
+			  width: 300px;
+			}
+			</style>
+			<h4>Years</h4>
+			<ul class="mdl-list">
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/">2017</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2016">2016</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2015">2015</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2014">2014</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2013">2013</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2012">2012</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2011">2011</a>
+			    </span>
+			  </li>
+			</ul>
+		</div>
+	</div>
+</main>
+{% endblock %}
