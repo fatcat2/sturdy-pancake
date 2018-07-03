@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 'Sublime Text 2'/
-*.tar.bz2
+.tar.bz2

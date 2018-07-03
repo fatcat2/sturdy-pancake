@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Sports{% endblock %}
 {% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$('#moneyTable').DataTable({
@@ -122,6 +123,24 @@
 		</div>
 		<div class="mdl-cell mdl-cell--2-col">
 		</div>
+	</div>
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--2-offset mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__tab-bar">
+				<a href="#brohm-family" class="mdl-tabs__tab is-active">The Brohms</a>
+			</div>
+
+			<div class="mdl-tabs__panel is-active" id="brohm-family">
+				<p>Let's take a look at Purdue Football's newest coaches</p>
+			    <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+			    <script>
+			    	new Chart(document.getElementById("chartjs-1"),
+			    	{
+			    		"type":"bar",
+			    		"data":{
+			    			"labels":["Jeffery Brohm","Brian Brohm","Gregory Brohm"],"datasets":[{"label":"The Brohmily","data":[3724000.91,443467.71, 248305,41],"fill":false,"backgroundColor":["rgba(194, 142, 14, 0.2)","rgba194, 142, 14, 0.2)","rgba(194, 142, 14, 0.2)"],"borderColor":["rgb(194, 142, 14)","rgb(194, 142, 14)", "rgb(194, 142, 14)"],"borderWidth":1}]},"options":{"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}}});
+			    </script>
+			</div>
 	</div>
 </main>
 {% endblock %}
