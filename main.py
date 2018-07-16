@@ -47,7 +47,10 @@ def individualSalary(name):
     c.execute("select * from salary where name=?", [name,])
     data = c.fetchone()
     conn.close()
-    print data[6]
+    try:
+        print data[6]
+    except:
+        return render_template("error.html")
     salary_data = json.loads(data[7])
     years_sorted = sorted(salary_data.iterkeys())
     print years_sorted
