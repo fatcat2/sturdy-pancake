@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ data["first_name"] }} {{ data["last_name"] }}{% endblock %}
+{% block title %}{{ data[3] }} {{ data[2] }}{% endblock %}
 {% block head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 <style type="text/css">
@@ -11,7 +11,7 @@
 <main class="mdl-layout__content">
 	<div class="mdl-grid mdl-grid--no-spacing">
 		<div class="mdl-cell mdl-cell--12-col">
-			<h1 style="text-align: center;">{{ data[1] }}</h1>
+			<h1 style="text-align: center;">{{ data[3] }} {{data[4]}} {{data[2]}}</h1>
 		</div>
 	</div>
 	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
@@ -28,14 +28,25 @@
 					"data":{
 						"labels":{{ years|safe }},
 						"datasets":[{
-							"label":"My First Dataset",
+							"label":("{{data[3]|safe}}" + " " +"{{data[2]|safe}}" + "'s Salary"),
 							"data":{{ salary|safe }},
 							"fill":false,
 							"borderColor":"rgb(194, 142, 14)",
 							"lineTension":0.1
 						}]
 					},
-					"options":{}
+					"options":{
+						scales: {
+						yAxes: [{
+						ticks: {
+						// Include a dollar sign in the ticks
+							callback: function(value, index, values) {
+								return '$' + value;
+									                    }
+																                  }
+												               }]
+									           }
+					}
 				});
 			</script>
 		</div>

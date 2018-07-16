@@ -3,7 +3,7 @@
 {% block head %}
 <script>
 	$(document).ready(function(){
-		$('#moneyTable').DataTable({
+		var table = $('#moneyTable').DataTable({
 			responsive: true,
 			ajax: "/static/{{ year }}.txt",
 			columnDefs: [
@@ -13,6 +13,13 @@
 				}
 			]
 		});
+		$('#moneyTable').on( 'click', 'tr', function () {
+			if({{ year }} != "2016" || {{year}} != "2017"){
+				var data = table.row(this).data();
+				console.log(data[0]);
+				location.href = "/salary/"+data[0]+data[1]+data[2];
+			}
+		} );
 	});
 </script>
 
@@ -38,6 +45,7 @@
 					<tr>
 						<th>Last Name</th>
 						<th>First Name</th>
+						<th>Middle Name</th>
 						<th>Employee Group</th>
 						<th>Department</th>
 						<th>Compensation</th>
