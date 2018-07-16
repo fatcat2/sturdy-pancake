@@ -40,11 +40,19 @@ def sports():
     return render_template("sports.html")
 
 #renders page for individual salary
-@app.route("/salary/<name>", methods=["POST"])
+@app.route("/salary/<name>", methods=["POST", "GET"])
 def individualSalary(name):
     conn = sqlite3.connect("salary_history.db")
     c = conn.cursor()
-    c.execute("select * from salary where name=?", (name))
+    c.execute("select * from salary where name=?", [name,])
     data = c.fetchone()
-    salary_data = json.loads(data["compensation"])
-    return render_template("salary.html", data=data, salary=salary_data)
+    conn.close()
+    print data[6]
+    salary_data = json.loads(data[7])
+    years_sorted = sorted(salary_data.iterkeys())
+    print years_sorted
+    salary_sort = []
+    for x in years_sorted:
+        salary_sort.append(salary_data[x])
+    print salary_sort
+    return render_template("salary.html", data=data, salary=json.dumps(salary_sort), years=json.dumps(years_sorted))
