@@ -64,12 +64,25 @@
           <div class="mdl-layout-spacer"></div>
 
           <!-- Navigation on the left side -->
-          <nav class="mdl-navigation">
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
             <a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/">Home</a>
             <a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect" href="/sports">Sports</a>
           </nav>
         </div>
       </header>
+      <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <span class="mdl-layout-title">sturdy-pancake</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="/sports">Sports</a>
+          <a class="mdl-navigation__link" href="/">2017</a>
+          <a class="mdl-navigation__link" href="/2016">2016</a>
+          <a class="mdl-navigation__link" href="/2015">2015</a>
+          <a class="mdl-navigation__link" href="/2014">2014</a>
+          <a class="mdl-navigation__link" href="/2013">2013</a>
+          <a class="mdl-navigation__link" href="/2012">2012</a>
+          <a class="mdl-navigation__link" href="/2011">2011</a>
+        </nav>
+      </div>
       {% block content %}
       {% endblock %}
     </div>
