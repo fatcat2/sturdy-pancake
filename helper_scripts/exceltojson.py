@@ -1,5 +1,5 @@
 from openpyxl import Workbook, load_workbook
-wb = load_workbook(filename='2017.xlsx')
+wb = load_workbook(filename='2016.xlsx')
 print(wb.sheetnames)
 
 sheet = wb.active
@@ -8,7 +8,7 @@ print(sheet['B2'].value)
 
 data_list = []
 
-for row in sheet.iter_rows(min_row=1, min_col=1, max_row=16386, max_col=13):
+for row in sheet.iter_rows(min_row=1, min_col=1, max_row=37625, max_col=13):
     a = []
     for cell in row:
         a.append(cell.value)
@@ -25,7 +25,7 @@ for row in sheet.iter_rows(min_row=1, min_col=1, max_row=16386, max_col=13):
     # print post_data
     data_list.append(post_data)
     
-f = open("2017.txt", "w+");
+f = open("2016.txt", "w+");
 
 f.write("{ \n\t\"data\": [\n");
 for x in range(0, len(data_list)):

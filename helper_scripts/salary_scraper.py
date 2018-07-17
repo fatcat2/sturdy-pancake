@@ -1,7 +1,7 @@
 import json
 import sqlite3
 from openpyxl import Workbook, load_workbook
-wb = load_workbook(filename='2011.xlsx')
+wb = load_workbook(filename='2017.xlsx')
 
 sheet = wb.active
 
@@ -11,31 +11,32 @@ data_list = []
 conn = sqlite3.connect("salary_history.db")
 c = conn.cursor()
 
-x = 0
+x = 200000000
 
 
 
 #go through excel file and add entries to sqlite3 db
-for row in sheet.iter_rows(min_row=2, min_col=1, max_row=16621, max_col=13):
+for row in sheet.iter_rows(min_row=2, min_col=1, max_row=16695, max_col=13):
     a = []
     for cell in row:
         a.append(cell.value)
     compensation_json = {}
-    compensation_json["2011"] = a[12]
+    compensation_json["2017"] = a[10]
     # print json.dumps(compensation_json)
 
-    if a[4] == None:
-        a[4] = ""
-
+    if a[3] == None:
+        a[3] = ""
+    if a[1] == None and a[2] == "None":
+        continue
     try:
         post_data = {
                 "id": x,
-                "name": a[2]+a[3]+a[4],
-                "last_name": a[2],
-                "first_name": a[3],
-                "middle_name": a[4],
-                "dept": a[5],
-                "employee_group": a[10],
+                "name": a[1]+a[2]+a[3],
+                "last_name": a[1],
+                "first_name": a[2],
+                "middle_name": a[3],
+                "dept": a[4],
+                "employee_group": a[9],
                 "compensation": json.dumps(compensation_json)
                 }
     except Exception as e:
