@@ -25,6 +25,9 @@
 
 <style type="text/css">
 	a.mdl-js-ripple-effect { position: relative; }
+	#monies{
+		overflow-x: auto;
+	}
 </style>
 {% endblock %}
 
@@ -36,10 +39,10 @@
 		</div>
 	</div>
 	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
-		<div class="mdl-cell mdl-cell--2-col">
+		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only">
 
 		</div>
-		<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+		<div id="monies" class="mdl-cell mdl-cell--8-col mdl-cell--middle mdl-cell--8-col-tablet mdl-cell--4-col-tablet">
 			<table id="moneyTable" class="mdl-data-table" style="width:100%">
 				<thead>
 					<tr>
