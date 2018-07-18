@@ -58,4 +58,9 @@ def individualSalary(name):
     for x in years_sorted:
         salary_sort.append(salary_data[x])
     print salary_sort
+    print data[4]
+    if len(data[4]) > 0:
+        lst = list(data)
+        lst[4] += "."
+        data = tuple(lst)
     return render_template("salary.html", data=data, salary=json.dumps(salary_sort), years=json.dumps(years_sorted))
