@@ -1,8 +1,6 @@
 # imports are listed below
 from flask import Flask, request, url_for
-from pymongo import MongoClient
 from flask import render_template
-import openpyxl as excel
 import os
 import sqlite3
 import json
@@ -13,14 +11,13 @@ app = Flask(__name__)
 # test route for the new ajax option
 @app.route("/dev")
 def dev():
-	print "dev page has been accsessed"
-	return render_template("dev.html")
+	return(render_template("dev.html"))
 
 @app.route("/data")
 def data():
     x = request.values
     for key,value in x.iteritems():
-        print key + ": " + value
+        print(key + ": " + value)
     return "lol"
 	
 
@@ -48,17 +45,14 @@ def individualSalary(name):
     data = c.fetchone()
     conn.close()
     try:
-        print data[6]
+        print(data[6])
     except:
         return render_template("error.html")
     salary_data = json.loads(data[7])
     years_sorted = sorted(salary_data.iterkeys())
-    print years_sorted
     salary_sort = []
     for x in years_sorted:
         salary_sort.append(salary_data[x])
-    print salary_sort
-    print data[4]
     if len(data[4]) > 0:
         lst = list(data)
         lst[4] += "."
