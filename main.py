@@ -59,3 +59,6 @@ def individualSalary(name):
         salary_sort.append(salary_data[x])
     print salary_sort
     return render_template("salary.html", data=data, salary=json.dumps(salary_sort), years=json.dumps(years_sorted))
+
+if __name__ == "__main__":
+    app.run()
