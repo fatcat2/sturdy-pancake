@@ -13,13 +13,6 @@
 				}
 			]
 		});
-		$('#moneyTable').on( 'click', 'tr', function () {
-			if({{ year }} != "2016" || {{year}} != "2017"){
-				var data = table.row(this).data();
-				console.log(data[0]);
-				location.href = "/salary/"+data[0]+data[1]+data[2];
-			}
-		} );
 	});
 </script>
 
@@ -36,14 +29,11 @@
 	<div class="mdl-grid mdl-grid--no-spacing">
 		<div class="mdl-cell mdl-cell--12-col">
 			<h1 style="text-align: center;">Purdue Salary Guide for {{ year }}</h1>
-			<div id="monies" class="mdl-cell mdl-cell--8-col-desktop mdl-cell--middle mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--2-offset-desktop mdl-cell--0-offset-tablet mdl-cell--0-offset-phone">
-				<p>This is made and maintained by me, Ryan Chen. First of all, yes this information is public. It contains salary information for anyone (except students) paid by Purdue University. Click on a row will bring up a graph of that person's salary through the available - currently, there is only data available through 2011, but I'm working on getting more information for years past.</p>
-			</div>
 		</div>
 	</div>
 	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
 		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--0-col-tablet mdl-cell--0-col-tablet">
-			Your ad here :)
+			
 		</div>
 		<div id="monies" class="mdl-cell mdl-cell--8-col-desktop mdl-cell--middle mdl-cell--12-col-tablet mdl-cell--12-col-phone" style="">
 			<table id="moneyTable" class="mdl-data-table display responsive" style="width:100%">
@@ -60,20 +50,6 @@
 			</table>
 		</div>
 		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--hide-tablet mdl-cell--hide-phone">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- salary guide -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5299168097573692"
-     data-ad-slot="8997094177"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-		</div>
-		<div class="mdl-cell mdl-cell--2-col mdl-layout--small-screen-only">
-		</div>
 	</div>
 </main>
 {% endblock %}

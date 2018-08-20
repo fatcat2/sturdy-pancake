@@ -13,6 +13,10 @@ app = Flask(__name__)
 def dev():
 	return(render_template("dev.html"))
 
+@app.route("/about")
+def about():
+	return(render_template("about.html"))
+
 @app.route("/data")
 def data():
     x = request.values
