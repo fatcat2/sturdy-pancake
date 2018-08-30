@@ -1,27 +1,7 @@
 {% extends "base.html" %}
 {% block title %}About{% endblock %}
-{% block head %}
-<script>
-	$(document).ready(function(){
-		var table = $('#moneyTable').DataTable({
-			responsive: true,
-			ajax: "/static/{{ year }}.txt",
-			columnDefs: [
-				{
-					targets: [ 0, 1, 2 ],
-					className: 'mdl-data-table__cell--non-numeric'
-				}
-			]
-		});
-	});
-</script>
 
-<style type="text/css">
-	a.mdl-js-ripple-effect { position: relative; }
-	#monies{
-		overflow-x: auto;
-	}
-</style>
+{% block head %}
 {% endblock %}
 
 {% block content %}
@@ -39,8 +19,9 @@
 			mdl-cell--0-offset-phone">
 				<p>The Exponent publishes public salary information for all Purdue employees in a special print edition on an annual basis during the spring semester. This database has compiled all of those figures from the past seven years in a searchable format.
 						Salaries of employees at a public institution are available to any person who submits a records request.
-						A PDF version of current and past Salary Guides on our website under the special sections tab. <br \>
-						Requests for additional functionality can be directed to online@purdueexponent.org.
+						A PDF version of current and past Salary Guides is on our website under the special sections tab.</p>
+						<p align="center">
+						Any feedback can be directed to <a href="mailto:online@purdueexponent.org">online@purdueexponent.org</a>.
 						</p>
 			</div>
 		</div>
