@@ -1,55 +1,47 @@
 {% extends "base.html" %}
-{% block title %}{{ year }}{% endblock %}
+{% block title %}About{% endblock %}
 {% block head %}
 <script>
 	$(document).ready(function(){
-		var table = $('#moneyTable').DataTable({
-			responsive: true,
-			ajax: "/static/{{ year }}.txt",
-			columnDefs: [
-				{
-					targets: [ 0, 1, 2 ],
-					className: 'mdl-data-table__cell--non-numeric'
-				}
-			]
+		var table = $('#example').DataTable({
+			responsive: {
+				details: {
+	                display: $.fn.dataTable.Responsive.display.modal( {
+	                    header: function ( row ) {
+	                        var data = row.data();
+	                        return 'Details for '+data[0]+' '+data[1];
+	                    }
+	                } ),
+	                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+	                    tableClass: 'table'
+	                } )
+	            }
+			},
+			ajax: "{{ url_for('static', filename=year+'.txt') }}",
 		});
 	});
 </script>
-
-<style type="text/css">
-	a.mdl-js-ripple-effect { position: relative; }
-	#monies{
-		overflow-x: auto;
-	}
-</style>
 {% endblock %}
 
+
 {% block content %}
-<main class="mdl-layout__content">
-	<div class="mdl-grid mdl-grid--no-spacing">
-		<div class="mdl-cell mdl-cell--12-col">
-			<h1 style="text-align: center;">Purdue Salary Guide for {{ year }}</h1>
-		</div>
+<div class="container-fluid">
+	<div class="row">
+		<h1>Purdue Salary Guide {{ year }}</h1>
 	</div>
-	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
-		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--0-col-tablet mdl-cell--0-col-tablet">
-			
-		</div>
-		<div id="monies" class="mdl-cell mdl-cell--8-col-desktop mdl-cell--middle mdl-cell--12-col-tablet mdl-cell--12-col-phone" style="">
-			<table id="moneyTable" class="mdl-data-table display responsive" style="width:100%;height:auto;">
-				<thead>
-					<tr>
-						<th class="all">Last Name</th>
-						<th class="all">First Name</th>
-						<th class="min-desktop">Middle Name</th>
-						<th class="min-phone-l">Employee Group</th>
-						<th class="min-desktop">Department</th>
-						<th class="all">Compensation</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--hide-tablet mdl-cell--hide-phone">
+	<div class="row">
+		<table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
+	        <thead>
+	            <tr>
+	                <th class="all">Last Name</th>
+					<th class="all">First Name</th>
+					<th class="min-desktop">Middle Name</th>
+					<th class="min-phone-l">Employee Group</th>
+					<th class="min-desktop">Department</th>
+					<th class="all">Compensation</th>
+	            </tr>
+	        </thead>
+	 	</table>
 	</div>
-</main>
+</div>
 {% endblock %}
