@@ -5,7 +5,7 @@ import os
 import sqlite3
 import json
 
-#adding comment code
+#adding comment codegi
 
 # declare the flask app object
 app = Flask(__name__)
