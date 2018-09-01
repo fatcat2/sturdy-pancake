@@ -102,3 +102,5 @@ ENV/
 
 'Sublime Text 2'/
 .tar.bz2
+
+/static/node_modules
