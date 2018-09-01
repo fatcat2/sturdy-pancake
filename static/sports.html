@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Sports{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#moneyTable').DataTable({
+			responsive: true,
+			"columnDefs": [
+				{ "width": "20%", "targets": 0 }
+			]
+		});
+	});
+</script>
+<style type="text/css">
+	a.mdl-js-ripple-effect { position: relative; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="mdl-layout__content">
+	<div class="mdl-grid mdl-grid--no-spacing">
+		<div class="mdl-cell mdl-cell--12-col">
+			<h1 style="text-align: center;">{{ year }}</h1>
+		</div>
+	</div>
+	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
+		<div class="mdl-cell mdl-cell--2-col">
+		</div>
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+			<h1>2017 Boilermaker coach salaries</h1>
+			<table id="moneyTable" class="mdl-data-table" style="width:100%">
+				<thead>
+					<tr>
+						<th>Sport</th>
+						<th>Name</th>
+						<th>Compensation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Baseball</td>
+						<td>Mark Wasikowski</td>
+						<td>$187,604.04</td>
+					</tr>
+					<tr>
+						<td>Men's Basketball</td>
+						<td>Matt Painter</td>
+						<td>$2,418,961.98</td>
+					</tr>
+					<tr>
+						<td>Women's Basketball</td>
+						<td>Sharon Versyp</td>
+						<td>$739,513.49</td>
+					</tr>
+					<tr>
+						<td>Men's and Women's Cross Country/TF</td>
+						<td>Lonnie Greene</td>
+						<td>$289,329.10</td>
+					</tr>
+					<tr>
+						<td>Men's and Women's Diving</td>
+						<td>Adam Soldati</td>
+						<td>$158,159.40</td>
+					</tr>
+					<tr>
+						<td>Football</td>
+						<td>Jeff Brohm</td>
+						<td>$3,724,000.91</td>
+					</tr>
+					<tr>
+						<td>Men's Golf</td>
+						<td>Bob Bradley</td>
+						<td>$150,023.00</td>
+					</tr>
+					<tr>
+						<td>Women's Golf</td>
+						<td>Devin Brouse</td>
+						<td>$186,446.18</td>
+					</tr>
+					<tr>
+						<td>Soccer</td>
+						<td>Drew Roff</td>
+						<td>$154,836.80</td>
+					</tr>
+					<tr>
+						<td>Softball</td>
+						<td>Boo De Oliveira</td>
+						<td>$127,551.92</td>
+					</tr>
+					<tr>
+						<td>Men's Swimming</td>
+						<td>Dan Ross</td>
+						<td>$108,501.32</td>
+					</tr>
+					<tr>
+						<td>Women's Swimming</td>
+						<td>John Klinge</td>
+						<td>$110,422.18</td>
+					</tr>
+					<tr>
+						<td>Men's Tennis</td>
+						<td>Pawel Gajdzik</td>
+						<td>$106,644.98</td>
+					</tr>
+					<tr>
+						<td>Women's Tennis</td>
+						<td>Laura Glitz</td>
+						<td>$122,417.60</td>
+					</tr>
+					<tr>
+						<td>Volleyball</td>
+						<td>Dave Shondell</td>
+						<td>$259,784.41</td>
+					</tr>
+					<tr>
+						<td>Wrestling</td>
+						<td>Tony Ersland</td>
+						<td>$126,383.40</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="mdl-cell mdl-cell--2-col">
+		</div>
+	</div>
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--2-offset mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__tab-bar">
+				<a href="#brohm-family" class="mdl-tabs__tab is-active">The Brohms</a>
+			</div>
+
+			<div class="mdl-tabs__panel is-active" id="brohm-family">
+				<p>Let's take a look at Purdue Football's newest coaches</p>
+			    <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+			    <script>
+			    	new Chart(document.getElementById("chartjs-1"),
+			    	{
+			    		"type":"bar",
+			    		"data":{
+			    			"labels":["Jeffery Brohm","Brian Brohm","Gregory Brohm"],"datasets":[{"label":"The Brohmily","data":[3724000.91,443467.71, 248305,41],"fill":false,"backgroundColor":["rgba(194, 142, 14, 0.2)","rgba194, 142, 14, 0.2)","rgba(194, 142, 14, 0.2)"],"borderColor":["rgb(194, 142, 14)","rgb(194, 142, 14)", "rgb(194, 142, 14)"],"borderWidth":1}]},"options":{"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}}});
+			    </script>
+			</div>
+	</div>
+</main>
+{% endblock %}

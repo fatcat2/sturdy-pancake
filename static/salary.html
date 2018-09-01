@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ data[3] }} {{ data[2] }}{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<style type="text/css">
+	a.mdl-js-ripple-effect { position: relative; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="mdl-layout__content">
+	<div class="mdl-grid mdl-grid--no-spacing">
+		<div class="mdl-cell mdl-cell--12-col">
+			<h1 style="text-align: center;">{{ data[3] }} {{data[4]}} {{data[2]}}</h1>
+		</div>
+	</div>
+	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
+		<div class="mdl-cell mdl-cell--2-col">
+
+		</div>
+		<div class="mdl-cell mdl-cell--8-col mdl-cell--middle">
+			<canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined">
+			</canvas>
+			<script>
+			new Chart(
+				document.getElementById("chartjs-0"),{
+					"type":"line",
+					"data":{
+						"labels":{{ years|safe }},
+						"datasets":[{
+							"label":("{{data[3]|safe}}" + " " +"{{data[2]|safe}}" + "'s Salary"),
+							"data":{{ salary|safe }},
+							"fill":false,
+							"borderColor":"rgb(194, 142, 14)",
+							"lineTension":0.1
+						}]
+					},
+					"options":{
+						scales: {
+							yAxes: [{
+								ticks: {
+								// Include a dollar sign in the ticks
+									callback: function(value, index, values) {
+										return '$' + value;
+									},
+									beginAtZero: true
+								}
+							}]
+						}
+					}
+				});
+			</script>
+		</div>
+		<div class="mdl-cell mdl-cell--2-col">
+			<!-- Simple list -->
+			<style>
+			.demo-list-item {
+			  width: 300px;
+			}
+			</style>
+			<h4>Years</h4>
+			<ul class="mdl-list">
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/">2017</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2016">2016</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2015">2015</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2014">2014</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2013">2013</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2012">2012</a>
+			    </span>
+			  </li>
+			  <li class="mdl-list__item">
+			    <span class="mdl-list__item-primary-content">
+			      <a href="/2011">2011</a>
+			    </span>
+			  </li>
+			</ul>
+		</div>
+	</div>
+</main>
+{% endblock %}
