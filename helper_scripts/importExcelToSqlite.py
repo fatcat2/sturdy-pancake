@@ -14,10 +14,14 @@ groupCol = int(input("What column is the group in?   "))
 compCol = int(input("What column is the compensation in?   "))
 
 # declare variables to be used
+print("Connecting to database")
 conn = sqlite3.connect("../static/salaries.db")
+print("Connected to ../static/salaries.db")
+print("Connecting to ../excel/"+year+".xlsx")
 filename = "../excel/" + year + ".xlsx"
 wb = load_workbook(filename=filename)
 sheet = wb.active
+print("Connected to excel sheet")
 
 # create le database
 print("Creating database for year " + year)
@@ -37,6 +41,10 @@ for row in sheet.iter_rows(min_row=2, min_col=1, max_row=maxRows, max_col=maxCol
         a[firstNameCol] = ""
     if a[middleNameCol] == None:
         a[middleNameCol] == None
+
+    # make sure to skip students (only a 2016.xlsx problem)
+    if a[groupCol] == "Student":
+        continue
 
     conn.execute("insert into Year"+year+" (lastName, firstName, middleName, department, empGroup, compensation) values (?, ?, ?, ?, ?, ?)", (a[lastNameCol], a[firstNameCol], a[middleNameCol], a[deptCol], a[groupCol], a[compCol],))
 
