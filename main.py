@@ -23,12 +23,14 @@ def about():
 def data(year):
     tableName = "Year"+year
     conn = sqlite3.connect("static/salaries.db")
-    cursor = conn.execute("select * from "+tableName)
+    c = conn.cursor()
+    c.execute("select * from "+tableName)
     tmpList = []
-    for row in cursor:
-        tmpList.append(row)
+    #for row in cursor:
+    #    tmpList.append(row)
     retDict = {}
-    retDict["data"] = tmpList
+    retDict["data"] = c.fetchall()
+    conn.close()
     return json.dumps(retDict)
 	
 
