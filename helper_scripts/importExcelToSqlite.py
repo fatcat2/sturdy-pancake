@@ -21,11 +21,11 @@ sheet = wb.active
 
 # create le database
 print("Creating database for year " + year)
-conn.execute("create table Year"+year+" (lastName text, firstName text, middleName text, department text, empGroup text, compensation text)")
+conn.execute("create table Year"+year+" (lastName text, firstName text, middleName text, department text, empGroup text, compensation double)")
 
 # populate le database
 print("Populating database for year " + year)
-for row in sheet.iter_rows(min_row=1, min_col=1, max_row=maxRows, max_col=maxCols):
+for row in sheet.iter_rows(min_row=2, min_col=1, max_row=maxRows, max_col=maxCols):
     a = []
     for cell in row:
         a.append(cell.value)
