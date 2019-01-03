@@ -8,8 +8,9 @@
 			ajax: "/data/{{ year }}",
 			columnDefs: [
 			{
-				targets: [ 0, 1, 2 ],
-				className: 'mdl-data-table__cell--non-numeric'
+				targets: 5,
+				data: 5,
+				render: $.fn.dataTable.render.number( ',', '.', 2, '$' )
 			}
 			],
 			order: [[ 5, "desc" ]]
