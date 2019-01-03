@@ -19,12 +19,17 @@ def dev():
 def about():
 	return(render_template("about.html"))
 
-@app.route("/data")
-def data():
-    x = request.values
-    for key,value in x.iteritems():
-        print(key + ": " + value)
-    return "lol"
+@app.route("/data/<year>")
+def data(year):
+    tableName = "Year"+year
+    conn = sqlite3.connect("static/salaries.db")
+    cursor = conn.execute("select * from "+tableName)
+    tmpList = []
+    for row in cursor:
+        tmpList.append(row)
+    retDict = {}
+    retDict["data"] = tmpList
+    return json.dumps(retDict)
 	
 
 # route makes it so when you go to that specific url it will render the index template
@@ -37,7 +42,6 @@ def hello():
 def not_current_year(page):
     return render_template("index.html", year=page)
 
-# this one is for the sports desk #alleyes
 @app.route("/sports")
 def sports():
     return render_template("sports.html")

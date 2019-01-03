@@ -5,7 +5,7 @@
 	$(document).ready(function(){
 		var table = $('#moneyTable').DataTable({
 			responsive: true,
-			ajax: "/static/{{ year }}.txt",
+			ajax: "/data/{{ year }}",
 			columnDefs: [
 			{
 				targets: [ 0, 1, 2 ],
