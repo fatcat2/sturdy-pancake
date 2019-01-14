@@ -1,7 +1,7 @@
 # imports are listed below
 from flask import Flask, request, url_for
-from flask import render_template
 from flask_bootstrap import Bootstrap
+from flask import render_template, send_from_directory
 import os
 import sqlite3
 import json
@@ -11,9 +11,10 @@ app = Flask(__name__)
 Bootstrap(app)
 
 # test route for the new ajax option
-@app.route("/dev")
-def dev():
-	return(render_template("dev.html"))
+@app.route("/favicon.ico")
+def favicon():
+    print("Favicon requested")
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route("/about")
 def about():
