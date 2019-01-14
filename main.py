@@ -1,12 +1,14 @@
 # imports are listed below
 from flask import Flask, request, url_for
 from flask import render_template
+from flask_bootstrap import Bootstrap
 import os
 import sqlite3
 import json
 
 # declare the flask app object
 app = Flask(__name__)
+Bootstrap(app)
 
 # test route for the new ajax option
 @app.route("/dev")

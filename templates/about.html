@@ -7,49 +7,44 @@
 			responsive: true,
 			ajax: "/static/{{ year }}.txt",
 			columnDefs: [
-			{
-				targets: [ 0, 1, 2 ],
-				className: 'mdl-data-table__cell--non-numeric'
-			}
+				{
+					targets: [ 0, 1, 2 ],
+					className: 'mdl-data-table__cell--non-numeric'
+				}
 			]
 		});
 	});
 </script>
 
 <style type="text/css">
-	a.mdl-js-ripple-effect { position: relative; }
-	#monies{
-		overflow-x: auto;
-	}
+a.mdl-js-ripple-effect { position: relative; }
+#monies{
+	overflow-x: auto;
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<main class="mdl-layout__content">
-	<div class="mdl-grid mdl-grid--no-spacing">
-		<div class="mdl-cell mdl-cell--12-col">
-			<h1 style="text-align: center;">Editor's Note</h1>
-			<div id="monies" class="mdl-cell
-				mdl-cell--8-col-desktop
-				mdl-cell--middle
-				mdl-cell--12-col-tablet
-				mdl-cell--12-col-phone
-				mdl-cell--2-offset-desktop
-				mdl-cell--0-offset-tablet
-				mdl-cell--0-offset-phone">
-				<p>The Exponent publishes public salary information from the previous calendar year for all Purdue employees in a special print edition on an annual basis during the spring semester. This database has compiled all of those figures from the past seven years in a searchable format. 
-					Salaries of employees at a public institution are available to any person who submits a records request.
-					A PDF version of current and past Salary Guides can be found on our website under the special sections tab.
-				</p>
-				<p>
-					Requests for additional functionality can be directed to <a href="mailto:online@purdueexponent.org">online@purdueexponent.org</a>.
-				</p>
-			</div>
-		</div>
+<br />
+<div class="row justify-content-center">
+	<div class="col col-lg-8">
+		<h1 style="text-align: center;">Editor's Note</h1>
 	</div>
-	<p align="center">© Copyright 2018 <a href="purdueexponent.org">Purdue Exponent</a>, PO Box 2506 West Lafayette, IN | <a href="https://www.purdueexponent.org/site/terms.html">Terms of Use</a> | <a href="https://www.purdueexponent.org/site/privacy.html">Privacy Policy</a></p>
-		<p align="center">
-			Created and maintained by <a href="twitter.com/ryanjengchen">@ryanjengchen</a>.
+</div>
+<br />
+<div class="row justify-content-center">
+	<div class="col col-lg-8">
+		<p>The Exponent publishes public salary information from the previous calendar year for all Purdue employees in a special print edition on an annual basis during the spring semester. This database has compiled all of those figures from the past seven years in a searchable format. 
+		Salaries of employees at a public institution are available to any person who submits a records request.
+		A PDF version of current and past Salary Guides can be found on our website under the special sections tab.
 		</p>
-</main>
+		<p>
+		Requests for additional functionality can be directed to <a href="mailto:online@purdueexponent.org">online@purdueexponent.org</a>.
+		</p>
+	</div>
+</div>
+<p align="center">© Copyright 2018 <a href="purdueexponent.org">Purdue Exponent</a>, PO Box 2506 West Lafayette, IN | <a href="https://www.purdueexponent.org/site/terms.html">Terms of Use</a> | <a href="https://www.purdueexponent.org/site/privacy.html">Privacy Policy</a> | <a href="/about">About</a></p>
+<p align="center">
+Created and maintained by <a href="twitter.com/ryanjengchen">@ryanjengchen</a>.
+</p>
 {% endblock %}
