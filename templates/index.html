@@ -7,51 +7,51 @@
 			responsive: true,
 			ajax: "/data/{{ year }}",
 			columnDefs: [
-			{
-				targets: 5,
-				data: 5,
-				render: $.fn.dataTable.render.number( ',', '.', 2, '$' )
-			}
+				{
+					targets: 5,
+					data: 5,
+					render: $.fn.dataTable.render.number( ',', '.', 2, '$' )
+				}
 			],
-			order: [[ 5, "desc" ]]
+			order: [[ 5, "desc" ]],
+			autoWidth: true
 		});
 	});
 </script>
-
+<style>
+a {
+	color: #C28E0E;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<main class="mdl-layout__content">
-	<div class="mdl-grid mdl-grid--no-spacing">
-		<div class="mdl-cell mdl-cell--12-col">
-			<h1 style="text-align: center;">Purdue Salary Guide for {{ year }}</h1>
-		</div>
+<br />
+<div class="row justify-content-center">
+	<div class="col">
+		<h1 style="text-align: center;">Purdue Salary Guide for {{ year }}</h1>
 	</div>
-	<div class="mdl-grid mdl-grid--no-spacing mdl-color--grey-100">
-		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--0-col-tablet mdl-cell--0-col-tablet">
+</div>
+<div class="row justify-content-center">
+	<div id="monies" class="col" style="">
+		<table id="moneyTable" class="table table-striped table-bordered responsive nowrap" style="width:100%;height:auto">
+			<thead>
+				<tr>
+					<th class="all">Last Name</th>
+					<th class="all">First Name</th>
+					<th class="min-desktop">Middle Name</th>
+					<th class="min-desktop">Department</th>
+					<th class="min-phone-l">Employee Group</th>
+					<th class="all">Compensation</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
 
-		</div>
-		<div id="monies" class="mdl-cell mdl-cell--8-col-desktop mdl-cell--middle mdl-cell--12-col-tablet mdl-cell--12-col-phone" style="">
-			<table id="moneyTable" class="mdl-data-table display responsive" style="width:100%;height:auto;">
-				<thead>
-					<tr>
-						<th class="all">Last Name</th>
-						<th class="all">First Name</th>
-						<th class="min-desktop">Middle Name</th>
-						<th class="min-desktop">Department</th>
-						<th class="min-phone-l">Employee Group</th>
-						<th class="all">Compensation</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-		<div class="mdl-cell mdl-cell--2-col mdl-layout--large-screen-only mdl-cell--hide-tablet mdl-cell--hide-phone">
-		</div>
-	</div>
-	<br>
-	<p style="text-align: center">© Copyright 2018 <a href="purdueexponent.org">Purdue Exponent</a>, PO Box 2506 West Lafayette, IN | <a href="https://www.purdueexponent.org/site/terms.html">Terms of Use</a> | <a href="https://www.purdueexponent.org/site/privacy.html">Privacy Policy</a></p>
-	<p style="text-align: center">
-		Created and maintained by <a href="twitter.com/ryanjengchen">@ryanjengchen</a>.
-	</p>
-	</main>
-	{% endblock %}
+<br>
+<p style="text-align: center">© Copyright 2018 <a href="purdueexponent.org">Purdue Exponent</a>, PO Box 2506 West Lafayette, IN | <a href="https://www.purdueexponent.org/site/terms.html">Terms of Use</a> | <a href="https://www.purdueexponent.org/site/privacy.html">Privacy Policy</a> | <a href="/about">About</a></p>
+<p style="text-align: center">
+Created and maintained by <a href="twitter.com/ryanjengchen">@ryanjengchen</a>.
+</p>
+{% endblock %}

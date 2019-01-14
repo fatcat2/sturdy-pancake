@@ -6,57 +6,59 @@
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121905904-2"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'UA-121905904-2');
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-121905904-2');
 		</script>
-		<meta name="theme-color" content="#ffffff">
 		<!-- Including JQuery -->
-		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 		<!-- Including the CSS -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-		<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
-
-		<!-- Including the MDL JS -->
-		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
 
 		<!-- Including the datable JS files -->
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 		<title>{% block title %}{% endblock %} - pu-salaryguide</title>
 		{% block head %}
 		{% endblock %}
 	</head>
-	<body class="mdl-color--grey-100">
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-			<header class="mdl-layout__header mdl-color--black">
-				<div class="mdl-layout__header-row">
-					<!-- Title -->
-					<span class="mdl-layout-title mdl-color-text--amber-300">pu-salaryguide</span>
-					<!-- Add spacer, to align navigation to the right -->
-					<!-- Navigation. We hide it in small screens. -->
-					<div class="mdl-layout-spacer"></div>
-				</div>
-			</header>
-			<div class="mdl-layout__drawer  ">
-				<span class="mdl-layout-title">pu-salaryguide</span>
-				<nav class="mdl-navigation">
-					<a class="mdl-navigation__link" href="/about">About</a>
-					<a class="mdl-navigation__link" href="/">2017</a>
-					<a class="mdl-navigation__link" href="/2016">2016</a>
-					<a class="mdl-navigation__link" href="/2015">2015</a>
-					<a class="mdl-navigation__link" href="/2014">2014</a>
-					<a class="mdl-navigation__link" href="/2013">2013</a>
-					<a class="mdl-navigation__link" href="/2012">2012</a>
-					<a class="mdl-navigation__link" href="/2011">2011</a>
-				</nav>
+	<body style="">
+		<nav class="navbar navbar-dark navbar-expand-lg bg-dark" style="">
+			<a class="navbar-brand text-light" style="color=#ffc107; text-decoration: none;" href="/">pu-salaryguide</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto nav-pills">
+					<li class="nav-item dropdown">
+						<div class="dropdown">
+							<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+							<button class="btn btn-outline-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Choose Year...
+							</button>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="/2011">2011</a>
+								<a class="dropdown-item" href="/2012">2012</a>
+								<a class="dropdown-item" href="/2013">2013</a>
+								<a class="dropdown-item" href="/2014">2014</a>
+								<a class="dropdown-item" href="/2015">2015</a>
+								<a class="dropdown-item" href="/2016">2016</a>
+								<a class="dropdown-item" href="/">2017</a>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
+		</nav>
+		<div class="container">
 			{% block content %}
 			{% endblock %}
-	</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	</body>
 </html>
