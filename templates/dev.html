@@ -9,7 +9,12 @@
 </body>
 <script type="text/javascript">
 	d3.json("/data/2018").then(function(data) {
-  console.log(data[0]);
-});
+  		data = data['data'];
+  		var dataDict = {};
+  		for(var key in data){
+
+  		}
+	});
+    </script>
 </script>
 </html>

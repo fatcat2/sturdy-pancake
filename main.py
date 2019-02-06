@@ -35,6 +35,27 @@ def data(year):
     retDict["data"] = c.fetchall()
     conn.close()
     return json.dumps(retDict)
+
+@app.route("/data/pie/<year>")
+def data(year):
+    tableName = "Year" + year
+    conn = sqlite3.connect("static/salaries.db")
+    c = conn.cursor()
+    c.execute("select * from "+tableName)
+    tmpList = []
+    #for row in cursor:
+    #    tmpList.append(row)
+    retDict = {}
+    for row in cursor:
+        dept = row[3]
+        comp = int(row[5])
+        if dept in retDict.keys():
+            retDict[dept] += comp
+        else:
+            retDict[dept] = comp
+    conn.close()
+    print(retDict)
+    return ":)"
 	
 
 # route makes it so when you go to that specific url it will render the index template
