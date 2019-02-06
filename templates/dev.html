@@ -1,42 +1,15 @@
-{% extends "base.html" %}
-{% block title %}About{% endblock %}
-{% block head %}
-<script>
-	$(document).ready(function(){
-		var table = $('#example').DataTable({
-			responsive: {
-				details: {
-	                display: $.fn.dataTable.Responsive.display.modal( {
-	                    header: function ( row ) {
-	                        var data = row.data();
-	                        return 'Details for '+data[0]+' '+data[1];
-	                    }
-	                } ),
-	                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-	                    tableClass: 'table'
-	                } )
-	            }
-			},
-			ajax: "{{ url_for('static', filename='2017.txt') }}",
-		});
-	});
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D3 Testing</title>
+</head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<body>
+
+</body>
+<script type="text/javascript">
+	d3.json("/data/2018").then(function(data) {
+  console.log(data[0]);
+});
 </script>
-{% endblock %}
-
-
-{% block content %}
-<div class="container-fluid">
-	<table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
-        <thead>
-            <tr>
-                <th class="all">Last Name</th>
-				<th class="all">First Name</th>
-				<th class="min-desktop">Middle Name</th>
-				<th class="min-phone-l">Employee Group</th>
-				<th class="min-desktop">Department</th>
-				<th class="all">Compensation</th>
-            </tr>
-        </thead>
- 	</table>
-</div>
-{% endblock %}
+</html>
