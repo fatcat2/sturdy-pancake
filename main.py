@@ -37,7 +37,7 @@ def data(year):
     return json.dumps(retDict)
 
 @app.route("/data/pie/<year>")
-def data(year):
+def dataPie(year):
     tableName = "Year" + year
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
@@ -46,7 +46,7 @@ def data(year):
     #for row in cursor:
     #    tmpList.append(row)
     retDict = {}
-    for row in cursor:
+    for row in c:
         dept = row[3]
         comp = int(row[5])
         if dept in retDict.keys():
