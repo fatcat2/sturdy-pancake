@@ -9,7 +9,6 @@ import json
 app = Flask(__name__)
 # Bootstrap(app)
 
-# test route for the new ajax option
 @app.route("/favicon.ico")
 def favicon():
     print("Favicon requested")
@@ -18,6 +17,10 @@ def favicon():
 @app.route("/about")
 def about():
 	return(render_template("about.html"))
+
+@app.route("/dev")
+def dev():
+    return(render_template("dev.html"))
 
 @app.route("/data/<year>")
 def data(year):
