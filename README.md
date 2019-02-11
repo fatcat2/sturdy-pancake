@@ -13,4 +13,4 @@ Made by Ryan Chen because Brad said to
 4. My joy and happiness!
 
 ### No fair, you get all the data to yourself!
-Nah I'm open to sharing! Hit up the endpoint `salary.ryanjchen.com/data/<insert year from 2010 to 2011>` to get a JSON of the specified year's data!
+Nah I'm open to sharing! Hit up the endpoint `http://salary.ryanjchen.com/data/<insert year from 2010 to 2011>` to get a JSON of the specified year's data!
