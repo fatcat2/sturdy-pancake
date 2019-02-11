@@ -45,17 +45,31 @@ def dataPie(year):
     tmpList = []
     #for row in cursor:
     #    tmpList.append(row)
-    retDict = {}
+    retDictTMP = {}
     for row in c:
         dept = row[3]
         comp = int(row[5])
-        if dept in retDict.keys():
-            retDict[dept] += comp
+
+        # Make sure we're just getting WL salaries
+        if "WL - " not in dept:
+            continue
+
+        # Insert into the retDictTMP
+        if dept in retDictTMP.keys():
+            retDictTMP[dept] += comp
         else:
-            retDict[dept] = comp
+            retDictTMP[dept] = comp
+
+    retDict = []
+    for dept in retDictTMP.keys():
+        tmpDict = {}
+        tmpDict["label"] = dept
+        tmpDict["comp"] = retDictTMP[dept]
+        retDict.append(tmpDict)
+
     conn.close()
-    print(retDict)
-    return ":)"
+    # print(retDict)
+    return json.dumps(retDict)
 	
 
 # route makes it so when you go to that specific url it will render the index template
