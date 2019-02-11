@@ -1,5 +1,6 @@
-## Exponent 2017 Salary Guide
-Made by Ryan Chen because Brad said to
+## The Purdue Exponent Salary Guide
+Ever wondered how much your professor/boss/you made? Well, look no further than the [Purdue Exponent Salary Guide](http://salary.purdueexponent.org)!
+
 ### Dependencies
 - Flask
 - OpenPYXL
