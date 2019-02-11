@@ -1,6 +1,5 @@
-## The Purdue Exponent Salary Guide
-Ever wondered how much your professor/boss/you made? Well, look no further than the [Purdue Exponent Salary Guide](http://salary.purdueexponent.org)!
-
+## Purdue Salary Guide
+Made by Ryan Chen because Brad said to
 ### Dependencies
 - Flask
 - OpenPYXL
@@ -14,4 +13,4 @@ Ever wondered how much your professor/boss/you made? Well, look no further than 
 4. My joy and happiness!
 
 ### No fair, you get all the data to yourself!
-Nah I'm open to sharing! Hit up the endpoint `salary.purdueexponent.org/data/<insert year from 2010 to 2011>` to get a JSON of the specified year's data!
+Nah I'm open to sharing! Hit up the endpoint `salary.ryanjchen.com/data/<insert year from 2010 to 2011>` to get a JSON of the specified year's data!
