@@ -41,7 +41,8 @@ def indiv_salary(year, LastFirstMiddle):
     tableName = "Year"+year
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
-    c.execute("select * from ? where combined = \"?\"", tableName, LastFirstMiddle)
+    sql = "select * from %s where combined = \"%s\"" % (tableName, LastFirstMiddle)
+    c.execute(sql)
     tmpList = []
     #for row in cursor:
     #    tmpList.append(row)
