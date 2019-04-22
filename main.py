@@ -36,6 +36,22 @@ def data(year):
     conn.close()
     return json.dumps(retDict)
 
+@app.route("/data/<year>/salary/<LastFirstMiddle>")
+def data(year, LastFirstMiddle):
+    tableName = "Year"+year
+    conn = sqlite3.connect("static/salaries.db")
+    c = conn.cursor()
+    c.execute("select * from "+tableName + "combined = " + LastFirstMiddle)
+    tmpList = []
+    #for row in cursor:
+    #    tmpList.append(row)
+    retDict = {}
+    retDict["data"] = c.fetchall()
+    conn.close()
+    return json.dumps(retDict)
+
+# @app.route("/data/<year>/name/<c>")
+
 @app.route("/data/pie/<year>")
 def dataPie(year):
     tableName = "Year" + year
@@ -70,7 +86,7 @@ def dataPie(year):
     conn.close()
     # print(retDict)
     return json.dumps(retDict)
-	
+
 
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
@@ -99,7 +115,7 @@ def individualSalary(name):
     except:
         return render_template("error.html")
     salary_data = json.loads(data[7])
-    years_sorted = sorted(salary_data.iterkeys())
+    years_sorted = sorted(salary_data.keys())
     salary_sort = []
     for x in years_sorted:
         salary_sort.append(salary_data[x])
