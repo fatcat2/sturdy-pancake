@@ -62,6 +62,10 @@ def data(year):
 @app.route("/data/<year>/salary/<LastFirstMiddle>")
 def indiv_salary(year, LastFirstMiddle):
     tableName = "Year"+year
+    try:
+        year = int(year)
+    except Exception as e:
+        return "Access denied."
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
     sql = getSQLQuery(1, year) + " where combined = ?"
