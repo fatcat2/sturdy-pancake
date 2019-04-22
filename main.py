@@ -109,5 +109,6 @@ def individualSalary(name):
         data = tuple(lst)
     return render_template("salary.html", data=data, salary=json.dumps(salary_sort), years=json.dumps(years_sorted))
 
+
 if __name__ == "__main__":
     app.run()
