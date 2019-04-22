@@ -37,11 +37,11 @@ def data(year):
     return json.dumps(retDict)
 
 @app.route("/data/<year>/salary/<LastFirstMiddle>")
-def data(year, LastFirstMiddle):
+def indiv_salary(year, LastFirstMiddle):
     tableName = "Year"+year
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
-    c.execute("select * from "+tableName + "combined = " + LastFirstMiddle)
+    c.execute("select * from "+tableName + " where combined = \"" + LastFirstMiddle + "\"")
     tmpList = []
     #for row in cursor:
     #    tmpList.append(row)
