@@ -10,21 +10,21 @@ app = Flask(__name__)
 # Bootstrap(app)
 
 def getSQLQuery(query_id, year):
-    if year === 2011:
+    if year == 2011:
         return "select * from Year2011"
-    elif year === 2012:
+    elif year == 2012:
         return "select * from Year2012"
-    elif year === 2013:
+    elif year == 2013:
         return "select * from Year2013"
-    elif year === 2014:
+    elif year == 2014:
         return "select * from Year2014"
-    elif year === 2015:
+    elif year == 2015:
         return "select * from Year2015"
-    elif year === 2016:
+    elif year == 2016:
         return "select * from Year2016"
-    elif year === 2017:
+    elif year == 2017:
         return "select * from Year2017"
-    elif year === 2018:
+    elif year == 2018:
         return "select * from Year2018"
 
 
