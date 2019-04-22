@@ -10,6 +10,10 @@ app = Flask(__name__)
 # Bootstrap(app)
 
 def getSQLQuery(query_id, year):
+    try:
+        year = int(year)
+    except Exception as e:
+        return -1
     if year == 2011:
         return "select * from Year2011"
     elif year == 2012:
@@ -61,7 +65,7 @@ def indiv_salary(year, LastFirstMiddle):
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
     sql = getSQLQuery(1, year) + " where combined = ?"
-    c.execute(sql, (tableName, LastFirstMiddle,))
+    c.execute(sql, (LastFirstMiddle,))
     tmpList = []
     #for row in cursor:
     #    tmpList.append(row)
