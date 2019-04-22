@@ -66,6 +66,10 @@ def indiv_salary(year, LastFirstMiddle):
         year = int(year)
     except Exception as e:
         return "Access denied."
+
+    # Scrub LastFirstMiddle to remove all whitespace
+    LastFirstMiddle = "".join(LastFirstMiddle.split())
+
     conn = sqlite3.connect("static/salaries.db")
     c = conn.cursor()
     sql = getSQLQuery(1, year) + " where combined = ?"
