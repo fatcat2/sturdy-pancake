@@ -9,11 +9,34 @@ import json
 app = Flask(__name__)
 # Bootstrap(app)
 
+def getSQLQuery(query_id, year):
+    try:
+        year = int(year)
+    except Exception as e:
+        return -1
+    if year == 2011:
+        return "select * from Year2011"
+    elif year == 2012:
+        return "select * from Year2012"
+    elif year == 2013:
+        return "select * from Year2013"
+    elif year == 2014:
+        return "select * from Year2014"
+    elif year == 2015:
+        return "select * from Year2015"
+    elif year == 2016:
+        return "select * from Year2016"
+    elif year == 2017:
+        return "select * from Year2017"
+    elif year == 2018:
+        return "select * from Year2018"
+
+
 @app.route("/favicon.ico")
 def favicon():
     print("Favicon requested")
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
+# comment
 @app.route("/about")
 def about():
 	return(render_template("about.html"))
@@ -35,6 +58,31 @@ def data(year):
     retDict["data"] = c.fetchall()
     conn.close()
     return json.dumps(retDict)
+
+@app.route("/data/<year>/salary/<LastFirstMiddle>")
+def indiv_salary(year, LastFirstMiddle):
+    tableName = "Year"+year
+    try:
+        year = int(year)
+    except Exception as e:
+        return "Access denied."
+
+    # Scrub LastFirstMiddle to remove all whitespace
+    LastFirstMiddle = "".join(LastFirstMiddle.split())
+
+    conn = sqlite3.connect("static/salaries.db")
+    c = conn.cursor()
+    sql = getSQLQuery(1, year) + " where combined = ?"
+    c.execute(sql, (LastFirstMiddle,))
+    tmpList = []
+    #for row in cursor:
+    #    tmpList.append(row)
+    retDict = {}
+    retDict["data"] = c.fetchall()
+    conn.close()
+    return json.dumps(retDict)
+
+# @app.route("/data/<year>/name/<c>")
 
 @app.route("/data/pie/<year>")
 def dataPie(year):
@@ -70,7 +118,7 @@ def dataPie(year):
     conn.close()
     # print(retDict)
     return json.dumps(retDict)
-	
+
 
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
@@ -99,7 +147,7 @@ def individualSalary(name):
     except:
         return render_template("error.html")
     salary_data = json.loads(data[7])
-    years_sorted = sorted(salary_data.iterkeys())
+    years_sorted = sorted(salary_data.keys())
     salary_sort = []
     for x in years_sorted:
         salary_sort.append(salary_data[x])
@@ -108,6 +156,7 @@ def individualSalary(name):
         lst[4] += "."
         data = tuple(lst)
     return render_template("salary.html", data=data, salary=json.dumps(salary_sort), years=json.dumps(years_sorted))
+
 
 if __name__ == "__main__":
     app.run()
