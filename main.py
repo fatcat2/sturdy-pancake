@@ -13,7 +13,7 @@ app = Flask(__name__)
 def favicon():
     print("Favicon requested")
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
+# comment
 @app.route("/about")
 def about():
 	return(render_template("about.html"))
