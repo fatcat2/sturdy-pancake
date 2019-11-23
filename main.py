@@ -6,7 +6,7 @@ import sqlite3
 import json
 
 # declare the flask app object
-app = Flask(__name__)
+app = Flask(__name__, template_folder="build", static_folder="build/static")
 # Bootstrap(app)
 
 def getSQLQuery(query_id, year):
@@ -47,10 +47,32 @@ def about():
 def dev():
     return(render_template("dev.html"))
 
+@app.route("/react_data/<year>")
+def react_data(year):
+    tableName = "Year"+year
+    conn = sqlite3.connect("data/salaries.db")
+    c = conn.cursor()
+    c.execute("select * from "+tableName)
+    tmpList = []
+    #for row in cursor:
+    #    tmpList.append(row)
+    retDict = {}
+    retDict["data"] = [{
+        "last_name": row[0],
+        "first_name": row[1],
+        "middle_name": row[2],
+        "dept": row[3],
+        "group": row[4],
+        "comp": row[5]
+    } for row in c.fetchall()]
+    conn.close()
+    return json.dumps(retDict)
+
+
 @app.route("/data/<year>")
 def data(year):
     tableName = "Year"+year
-    conn = sqlite3.connect("static/salaries.db")
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute("select * from "+tableName)
     tmpList = []
@@ -72,7 +94,7 @@ def indiv_salary(year, LastFirstMiddle):
     # Scrub LastFirstMiddle to remove all whitespace
     LastFirstMiddle = "".join(LastFirstMiddle.split())
 
-    conn = sqlite3.connect("static/salaries.db")
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     sql = getSQLQuery(1, year) + " where combined = ?"
     c.execute(sql, (LastFirstMiddle,))
@@ -80,6 +102,7 @@ def indiv_salary(year, LastFirstMiddle):
     #for row in cursor:
     #    tmpList.append(row)
     retDict = {}
+    retDict["year"] = year
     retDict["data"] = c.fetchall()
     conn.close()
     return json.dumps(retDict)
@@ -89,7 +112,7 @@ def indiv_salary(year, LastFirstMiddle):
 @app.route("/data/pie/<year>")
 def dataPie(year):
     tableName = "Year" + year
-    conn = sqlite3.connect("static/salaries.db")
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute("select * from "+tableName)
     tmpList = []
@@ -125,6 +148,7 @@ def dataPie(year):
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
 def hello():
+<<<<<<< HEAD
     return render_template("index.html", year="2019" )
 
 # renders the page for the specific year
@@ -134,7 +158,7 @@ def not_current_year(page):
 
 @app.route("/sports")
 def sports():
-    return render_template("sports.html")
+    return render_template("index.html")
 
 #renders page for individual salary
 @app.route("/salary/<name>", methods=["POST", "GET"])
@@ -161,4 +185,4 @@ def individualSalary(name):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
