@@ -6,7 +6,7 @@ import sqlite3
 import json
 
 # declare the flask app object
-app = Flask(__name__, template_folder="build", static_folder="build/static")
+app = Flask(__name__, template_folder="frontend/build", static_folder="frontend/build/static")
 # Bootstrap(app)
 
 def getSQLQuery(query_id, year):
@@ -173,4 +173,4 @@ def individualSalary(name):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
