@@ -30,6 +30,8 @@ def getSQLQuery(query_id, year):
         return "select * from Year2017"
     elif year == 2018:
         return "select * from Year2018"
+    elif year == 2019:
+        return "select * from Year2019"
 
 
 @app.route("/favicon.ico")
@@ -123,7 +125,7 @@ def dataPie(year):
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
 def hello():
-    return render_template("index.html", year="2018" )
+    return render_template("index.html", year="2019" )
 
 # renders the page for the specific year
 @app.route("/<page>")
