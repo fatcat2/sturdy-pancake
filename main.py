@@ -148,7 +148,6 @@ def dataPie(year):
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
 def hello():
-<<<<<<< HEAD
     return render_template("index.html", year="2019" )
 
 # renders the page for the specific year
