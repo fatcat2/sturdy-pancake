@@ -47,9 +47,11 @@ def about():
 def dev():
     return(render_template("dev.html"))
 
-@app.route("/react_data/<year>")
+@app.route("/data/<year>")
 def react_data(year):
     tableName = "Year"+year
+    department_table = f"Department{year}"
+    group_table = f"Group{year}"
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute("select * from "+tableName)
@@ -65,23 +67,22 @@ def react_data(year):
         "group": row[4],
         "comp": row[5]
     } for row in c.fetchall()]
+
+    c.execute("select * from " + department_table + " order by name asc")
+    retDict["departments"] = [{
+        "text": row[0],
+        "value": row[0],
+    } for row in c.fetchall()]
+
+    c.execute("select * from " + group_table + " order by name asc")
+    retDict["groups"] = [{
+        "text": row[0],
+        "value": row[0],
+    } for row in c.fetchall()]
+
     conn.close()
     return json.dumps(retDict)
 
-
-@app.route("/data/<year>")
-def data(year):
-    tableName = "Year"+year
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute("select * from "+tableName)
-    tmpList = []
-    #for row in cursor:
-    #    tmpList.append(row)
-    retDict = {}
-    retDict["data"] = c.fetchall()
-    conn.close()
-    return json.dumps(retDict)
 
 @app.route("/data/<year>/salary/<LastFirstMiddle>")
 def indiv_salary(year, LastFirstMiddle):

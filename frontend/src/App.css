@@ -10,7 +10,7 @@
 
 .App-header {
   /* background-color: #282c34; */
-  /* min-height: 100vh; */
+  /*min-height: 100vh;*/
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,4 +21,11 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
 }
