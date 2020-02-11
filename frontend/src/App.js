@@ -232,7 +232,8 @@ class App extends React.Component{
                     return record.dept.indexOf(value) === 0
                 },
                 sorter: (a, b) => { return a.dept.localeCompare(b.dept)},
-                sortDirections: ['ascend', 'descend']
+                sortDirections: ['ascend', 'descend'],
+                render: text => text.replace(/&amp;/g, '&')
             },
             {
                 dataIndex: 'group',
