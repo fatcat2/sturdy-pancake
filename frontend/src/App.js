@@ -196,6 +196,32 @@ class App extends React.Component{
         // console.log(filteredEvents)
     };
 
+    handleSearchOnChange = searchText => {
+        var keywords = searchText.target.value.toLowerCase().split(" ");
+        // console.log(keywords);
+
+        const filteredEvents = this.state.year_data.filter(({ first_name, last_name }) => {
+            first_name = first_name.toLowerCase();
+            last_name = last_name.toLowerCase();            
+
+            var match = false;
+            
+            for(var word in keywords){
+                match = match || (first_name.indexOf(keywords[word]) === 0) || (last_name.indexOf(keywords[word]) === 0)
+            }
+
+            // console.log(match)
+
+            return match;
+        });
+    
+        this.setState({
+          data: filteredEvents
+        });
+    
+        // console.log(filteredEvents)
+    };
+
 
     
 
@@ -290,7 +316,7 @@ class App extends React.Component{
                                 <header class="header">
                                 <Search
                                     placeholder="Enter name ..."
-                                    onSearch={this.handleSearch}
+                                    onChange={this.handleSearchOnChange}
                                     style={{ width: 200 }}
                                 />
                                 </header>
