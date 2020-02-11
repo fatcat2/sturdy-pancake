@@ -11,7 +11,7 @@ import {Dropdown} from 'semantic-ui-react';
 
 import ReactTable from "react-table";
 
-import {Row, Col, Menu, Icon, Table, Typography, Input} from 'antd';
+import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip} from 'antd';
 import {
     BrowserRouter as Router,
     Switch,
@@ -200,14 +200,20 @@ class App extends React.Component{
         var keywords = searchText.target.value.toLowerCase().split(" ");
         // console.log(keywords);
 
-        const filteredEvents = this.state.year_data.filter(({ first_name, last_name }) => {
+        const filteredEvents = this.state.year_data.filter(({ first_name, last_name, dept, group }) => {
             first_name = first_name.toLowerCase();
-            last_name = last_name.toLowerCase();            
+            last_name = last_name.toLowerCase();        
+            dept = dept.toLowerCase();
+            group = group.toLowerCase();    
 
             var match = false;
             
             for(var word in keywords){
-                match = match || (first_name.indexOf(keywords[word]) === 0) || (last_name.indexOf(keywords[word]) === 0)
+                match = match ||
+                (first_name.indexOf(keywords[word]) === 0) ||
+                (last_name.indexOf(keywords[word]) === 0) ||
+                (dept.includes(keywords[word])) ||
+                (group.includes(keywords[word]))
             }
 
             // console.log(match)
@@ -300,12 +306,14 @@ class App extends React.Component{
                         <Col>
                             <Title>
                                 Purdue Salary Guide for { ' ' }
-                                <Dropdown
-                                    inline
-                                    options={yearOptions}
-                                    defaultValue={yearOptions[0].value}
-                                    onChange={this.onChange}
-                                />
+                                <Tooltip placement="right" title={"Click me to change the year!"}>
+                                    <Dropdown
+                                        inline
+                                        options={yearOptions}
+                                        defaultValue={yearOptions[0].value}
+                                        onChange={this.onChange}
+                                    />
+                                </Tooltip>
                             </Title>
                         </Col>
                     </Row>
@@ -315,7 +323,7 @@ class App extends React.Component{
                             <section>
                                 <header class="header">
                                 <Search
-                                    placeholder="Enter name ..."
+                                    placeholder="Enter keywords ..."
                                     onChange={this.handleSearchOnChange}
                                     style={{ width: 200 }}
                                 />
