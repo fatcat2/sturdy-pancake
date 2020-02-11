@@ -132,17 +132,20 @@ class App extends React.Component{
             group_filters: [{"text": "Faculty", "value": "Faculty"}],
             filtered: [],
             filterAll: '',
+            loading: true
         }
 
         this.onChange = (e, v) => {
             this.setState({year: v.value});
+            this.setState({loading: true});
             axios.get(`/data/${v.value}`).then(res => {
                 // console.log(res.data);
                 this.setState({
                     data: res.data["data"],
                     year_data: res.data["data"],
                     department_filters: res.data["departments"],
-                    group_filters: res.data["groups"]
+                    group_filters: res.data["groups"],
+                    loading: false
                 })
             });
             // console.log(v.value)
@@ -158,7 +161,8 @@ class App extends React.Component{
                 data: res.data["data"],
                 year_data: res.data["data"],
                 department_filters: res.data["departments"],
-                group_filters: res.data["groups"]
+                group_filters: res.data["groups"],
+                loading: false
             })
         });
     }
@@ -191,7 +195,6 @@ class App extends React.Component{
             }
 
             // console.log(match)
-
             return match;
         });
     
@@ -303,7 +306,8 @@ class App extends React.Component{
                                 />
                                 </header>
                                 <BrowserView>
-                                    <Table bordered columns={columns} dataSource={this.state.data}>
+                                    <Table bordered 
+                                    loading={this.state.loading} columns={columns} dataSource={this.state.data}>
                                     </Table>
                                 </BrowserView>
                                 {/*<MobileView>*/}
