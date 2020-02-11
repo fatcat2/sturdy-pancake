@@ -181,7 +181,7 @@ class App extends React.Component{
             var match = false;
             
             for(var word in keywords){
-                match = match || first_name.includes(keywords[word]) || last_name.includes(keywords[word])
+                match = match || (first_name.indexOf(keywords[word]) === 0) || (last_name.indexOf(keywords[word]) === 0)
             }
 
             // console.log(match)
