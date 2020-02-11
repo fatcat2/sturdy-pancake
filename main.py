@@ -149,6 +149,8 @@ def dataPie(year):
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
 def hello():
+<<<<<<< HEAD
+=======
     return render_template("index.html", year="2019" )
 
 # renders the page for the specific year
@@ -158,6 +160,7 @@ def not_current_year(page):
 
 @app.route("/sports")
 def sports():
+>>>>>>> 56852a426e51d0e0b2242c1978b9d5e93fae2ef3
     return render_template("index.html")
 
 #renders page for individual salary
