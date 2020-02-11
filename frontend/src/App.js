@@ -170,32 +170,6 @@ class App extends React.Component{
         });
     };
 
-    handleSearch = searchText => {
-        var keywords = searchText.toLowerCase().split(" ");
-        // console.log(keywords);
-
-        const filteredEvents = this.state.year_data.filter(({ first_name, last_name }) => {
-            first_name = first_name.toLowerCase();
-            last_name = last_name.toLowerCase();            
-
-            var match = false;
-            
-            for(var word in keywords){
-                match = match || (first_name.indexOf(keywords[word]) === 0) || (last_name.indexOf(keywords[word]) === 0)
-            }
-
-            // console.log(match)
-
-            return match;
-        });
-    
-        this.setState({
-          data: filteredEvents
-        });
-    
-        // console.log(filteredEvents)
-    };
-
     handleSearchOnChange = searchText => {
         var keywords = searchText.target.value.toLowerCase().split(" ");
         // console.log(keywords);
@@ -237,7 +211,7 @@ class App extends React.Component{
                 dataIndex: 'last_name',
                 key: "last_name",
                 title: 'Last Name',
-                sorter: (a, b) => { return a.last_name.localeCompare(b.first_name)},
+                sorter: (a, b) => { return a.last_name.localeCompare(b.last_name)},
                 sortDirections: ['ascend', 'descend']
             },
             {
