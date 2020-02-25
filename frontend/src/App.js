@@ -267,6 +267,45 @@ class App extends React.Component{
             }
         ];
 
+        let mobile_columns = [
+            {
+                dataIndex: 'last_name',
+                key: "last_name",
+                title: 'Last Name',
+                sorter: (a, b) => { return a.last_name.localeCompare(b.last_name)},
+                sortDirections: ['ascend', 'descend']
+            },
+            {
+                dataIndex: 'first_name',
+                key: "first_name",
+                title: 'First Name',
+                sorter: (a, b) => { return a.first_name.localeCompare(b.first_name)},
+                sortDirections: ['ascend', 'descend']
+            },
+            // {
+            //     dataIndex: 'dept',
+            //     key: "dept",
+            //     title: 'Department',
+            //     filters: this.state.department_filters,
+            //     onFilter: (value, record) => {
+            //         // console.log(value, record)
+            //         return record.dept.indexOf(value) === 0
+            //     },
+            //     sorter: (a, b) => { return a.dept.localeCompare(b.dept)},
+            //     sortDirections: ['ascend', 'descend'],
+            //     render: text => text.replace(/&amp;/g, '&')
+            // },
+            {
+                dataIndex: 'comp',
+                key: "comp",
+                title: 'Compensation',
+                render: text => <CurrencyFormat value={text} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
+                sorter: (a,b) =>  a.comp - b.comp ,
+                defaultSortOrder: "descend",
+                sortDirections: ['ascend', 'descend']
+            }
+        ];
+
         // console.log(columns);
 
         return (
@@ -296,7 +335,7 @@ class App extends React.Component{
                     </Row>
                     </div>
                     <Row>
-                        <Col xs={24} xl={18} offset={3}>
+                        <Col xs={24} xl={{span: 18, offset: 3}} >
                             <section>
                                 <header class="header">
                                 <Search
@@ -310,14 +349,16 @@ class App extends React.Component{
                                     loading={this.state.loading} columns={columns} dataSource={this.state.data}>
                                     </Table>
                                 </BrowserView>
-                                {/*<MobileView>*/}
-                                {/*    <Table bordered*/}
-                                {/*           columns={mobile_columns}*/}
-                                {/*           dataSource={this.state.data}*/}
-                                {/*           expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}*/}
-                                {/*    >*/}
-                                {/*    </Table>*/}
-                                {/*</MobileView>*/}
+                                <MobileView>
+                                    <Table bordered
+                                           loading={this.state.loading}
+                                           columns={mobile_columns}
+                                           dataSource={this.state.data}
+                                           expandedRowRender={record => <p style={{ margin: 0 }}>{record.long_text}</p>}
+                                           size="small"
+                                    >
+                                    </Table>
+                                </MobileView>
                             </section>
                         </Col>
                     </Row>

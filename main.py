@@ -65,7 +65,8 @@ def react_data(year):
         "middle_name": row[2],
         "dept": row[3],
         "group": row[4],
-        "comp": row[5]
+        "comp": row[5],
+        "long_text": row[6]
     } for row in c.fetchall()]
 
     c.execute("select * from " + department_table + " order by name asc")
