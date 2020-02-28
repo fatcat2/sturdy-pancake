@@ -11,7 +11,7 @@ import {Dropdown} from 'semantic-ui-react';
 
 import ReactTable from "react-table";
 
-import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip} from 'antd';
+import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip, Layout} from 'antd';
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,9 +21,10 @@ import {
 
 import 'antd/dist/antd.css';
 
+const { Header, Footer, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const { Search } = Input;
-const { Title } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 
 
@@ -113,9 +114,36 @@ const yearOptions = [
 
 function About(){
     return (
-        <p>
-            This is an online database containing salary information for Purdue employees for the fiscal years of 2011 through 2018. Anyone who got paid by Purdue and was not a student is in this database, along with the amount compensated. The data is provided by Purdue University through their Public Records office. Salary information at public universities is public information and is able to be requested through the university's public records division. Student compensation is not listed in here due to FERPA restrictions. If you're interested in looking at the code and source data, hit up the GitHub repo. Excel sheets containing the salary data can be found in the GitHub repo. You can get the JSON for a specific year by submitting a HTTP request to https://salary.ryanjchen.com/data/"insert year". Example: 2018 data can be found at https://salary.ryanjchen.com/data/2018. Requests for additional functionality can be directed to ryanjchen2@gmail.com.
-        </p>
+        <Row>
+            <Col xs={{span:22, offset: 1}} xl={{span: 18, offset: 3}} >
+                <Typography>
+                    <Paragraph>
+                        This is an online database containing salary information for Purdue employees
+                        for the fiscal years of 2011 through 2018. Anyone who got paid by Purdue and was
+                        not a student is in this database, along with the amount compensated.
+                    </Paragraph>
+                    <Paragraph>
+                        The data is
+                        provided by Purdue University through their Public Records office. Salary information
+                        at public universities is public information and is able to be requested through the university's
+                        public records division. Student compensation is not listed in here due to FERPA restrictions.
+                    </Paragraph>
+                    <Paragraph>
+                        If you're interested in looking at the code and source data, hit up the GitHub repo. Excel sheets
+                        containing the salary data can be found in the <a href="https://github.com/fatcat2/sturdy-pancake">GitHub repo</a>. You can get the JSON for a specific year
+                        by submitting a HTTP request to 
+                        <Text code={true}>
+                            https://salary.ryanjchen.com/data/"insert year".
+                        </Text>
+                        Example: 2018 data can be found at https://salary.ryanjchen.com/data/2018.
+                    </Paragraph>
+                    <Paragraph>
+                        Requests for additional functionality can be
+                        directed to ryanjchen2@gmail.com.
+                    </Paragraph>
+                </Typography>
+            </Col>
+         </Row>
     )
 }
 
@@ -312,56 +340,70 @@ class App extends React.Component{
             <Router>
                 <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" theme="dark">
                     <Menu.Item key="home">
+                        <a href="/">
                         pu-salary-guide
+                        </a>
                     </Menu.Item>
                 </Menu>
+                <Content>
                 <br /><br/>
                 <div>
-                    <div className="App-header">
-                    <Row>
-                        <Col>
-                            <Title>
-                                Purdue Salary Guide for { ' ' }
-                                <Tooltip placement="right" title={"Click me to change the year!"}>
-                                    <Dropdown
-                                        inline
-                                        options={yearOptions}
-                                        defaultValue={yearOptions[0].value}
-                                        onChange={this.onChange}
+                    <Switch>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/">
+                        <div className="App-header">
+                        <Row>
+                            <Col>
+                                <Title>
+                                    Purdue Salary Guide for { ' ' }
+                                    <Tooltip placement="right" title={"Click me to change the year!"}>
+                                        <Dropdown
+                                            inline
+                                            options={yearOptions}
+                                            defaultValue={yearOptions[0].value}
+                                            onChange={this.onChange}
+                                        />
+                                    </Tooltip>
+                                </Title>
+                            </Col>
+                        </Row>
+                        </div>
+                        <Row>
+                            <Col xs={24} xl={{span: 18, offset: 3}} >
+                                <section>
+                                    <header class="header">
+                                    <Search
+                                        placeholder="Enter keywords ..."
+                                        onChange={this.handleSearchOnChange}
+                                        style={{ width: 200 }}
                                     />
-                                </Tooltip>
-                            </Title>
-                        </Col>
-                    </Row>
-                    </div>
-                    <Row>
-                        <Col xs={24} xl={{span: 18, offset: 3}} >
-                            <section>
-                                <header class="header">
-                                <Search
-                                    placeholder="Enter keywords ..."
-                                    onChange={this.handleSearchOnChange}
-                                    style={{ width: 200 }}
-                                />
-                                </header>
-                                <BrowserView>
-                                    <Table bordered 
-                                    loading={this.state.loading} columns={columns} dataSource={this.state.data}>
-                                    </Table>
-                                </BrowserView>
-                                <MobileView>
-                                    <Table bordered
-                                           loading={this.state.loading}
-                                           columns={mobile_columns}
-                                           dataSource={this.state.data}
-                                           expandedRowRender={record => <p style={{ margin: 0 }}>{record.long_text}</p>}
-                                           size="small"
-                                    >
-                                    </Table>
-                                </MobileView>
-                            </section>
-                        </Col>
-                    </Row>
+                                    </header>
+                                    <BrowserView>
+                                        <Table bordered 
+                                        loading={this.state.loading} columns={columns} dataSource={this.state.data}>
+                                        </Table>
+                                    </BrowserView>
+                                    <MobileView>
+                                        <Table bordered
+                                            loading={this.state.loading}
+                                            columns={mobile_columns}
+                                            dataSource={this.state.data}
+                                            expandedRowRender={record => <p style={{ margin: 0 }}>{record.long_text}</p>}
+                                            size="small"
+                                        >
+                                        </Table>
+                                    </MobileView>
+                                </section>
+                            </Col>
+                        </Row>
+                        </Route>
+                    </Switch>
+                </div>
+                </Content>
+                <div style={{textAlign: "center", position: "sticky", bottom: "0"}}>
+                    <Link to="/about">About</Link> | Maintained by <a href="https://twitter.com/ryanjengchen">@ryanjengchen</a>.
                 </div>
             </Router>
         );
