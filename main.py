@@ -6,7 +6,7 @@ import sqlite3
 import json
 
 # declare the flask app object
-app = Flask(__name__)
+app = Flask(__name__, template_folder="frontend/build", static_folder="frontend/build/static")
 # Bootstrap(app)
 
 def getSQLQuery(query_id, year):
@@ -37,29 +37,53 @@ def getSQLQuery(query_id, year):
 @app.route("/favicon.ico")
 def favicon():
     print("Favicon requested")
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 # comment
 @app.route("/about")
 def about():
-	return(render_template("about.html"))
+	return(render_template("index.html"))
 
 @app.route("/dev")
 def dev():
     return(render_template("dev.html"))
 
 @app.route("/data/<year>")
-def data(year):
+def react_data(year):
     tableName = "Year"+year
-    conn = sqlite3.connect("static/salaries.db")
+    department_table = f"Department{year}"
+    group_table = f"Group{year}"
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute("select * from "+tableName)
     tmpList = []
     #for row in cursor:
     #    tmpList.append(row)
     retDict = {}
-    retDict["data"] = c.fetchall()
+    retDict["data"] = [{
+        "last_name": row[0],
+        "first_name": row[1],
+        "middle_name": row[2],
+        "dept": row[3],
+        "group": row[4],
+        "comp": row[5],
+        "long_text": row[6]
+    } for row in c.fetchall()]
+
+    c.execute("select * from " + department_table + " order by name asc")
+    retDict["departments"] = [{
+        "text": row[0],
+        "value": row[0],
+    } for row in c.fetchall()]
+
+    c.execute("select * from " + group_table + " order by name asc")
+    retDict["groups"] = [{
+        "text": row[0],
+        "value": row[0],
+    } for row in c.fetchall()]
+
     conn.close()
     return json.dumps(retDict)
+
 
 @app.route("/data/<year>/salary/<LastFirstMiddle>")
 def indiv_salary(year, LastFirstMiddle):
@@ -72,7 +96,7 @@ def indiv_salary(year, LastFirstMiddle):
     # Scrub LastFirstMiddle to remove all whitespace
     LastFirstMiddle = "".join(LastFirstMiddle.split())
 
-    conn = sqlite3.connect("static/salaries.db")
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     sql = getSQLQuery(1, year) + " where combined = ?"
     c.execute(sql, (LastFirstMiddle,))
@@ -80,6 +104,7 @@ def indiv_salary(year, LastFirstMiddle):
     #for row in cursor:
     #    tmpList.append(row)
     retDict = {}
+    retDict["year"] = year
     retDict["data"] = c.fetchall()
     conn.close()
     return json.dumps(retDict)
@@ -89,7 +114,7 @@ def indiv_salary(year, LastFirstMiddle):
 @app.route("/data/pie/<year>")
 def dataPie(year):
     tableName = "Year" + year
-    conn = sqlite3.connect("static/salaries.db")
+    conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute("select * from "+tableName)
     tmpList = []
@@ -134,7 +159,7 @@ def not_current_year(page):
 
 @app.route("/sports")
 def sports():
-    return render_template("sports.html")
+    return render_template("index.html")
 
 #renders page for individual salary
 @app.route("/salary/<name>", methods=["POST", "GET"])
@@ -161,4 +186,4 @@ def individualSalary(name):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host="0.0.0.0")
