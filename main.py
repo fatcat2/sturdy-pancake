@@ -109,43 +109,23 @@ def indiv_salary(year, LastFirstMiddle):
     conn.close()
     return json.dumps(retDict)
 
-# @app.route("/data/<year>/name/<c>")
-
-@app.route("/data/pie/<year>")
+@app.route("/data/<year>/departments")
 def dataPie(year):
-    tableName = "Year" + year
+    """Returns the departments and compensations for the year.
+    """
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
-    c.execute("select * from "+tableName)
-    tmpList = []
-    #for row in cursor:
-    #    tmpList.append(row)
-    retDictTMP = {}
-    for row in c:
-        dept = row[3]
-        comp = int(row[5])
+    c.execute(f"select name, sum(compensation) from Department{year} join Year{year} on name=department group by name")
+    
+    retDict = {}
+    retDict["year"] = year
+    retDict["data"] = {}
 
-        # Make sure we're just getting WL salaries
-        if "WL - " not in dept:
-            continue
-
-        # Insert into the retDictTMP
-        if dept in retDictTMP.keys():
-            retDictTMP[dept] += comp
-        else:
-            retDictTMP[dept] = comp
-
-    retDict = []
-    for dept in retDictTMP.keys():
-        tmpDict = {}
-        tmpDict["label"] = dept
-        tmpDict["comp"] = retDictTMP[dept]
-        retDict.append(tmpDict)
+    for row in c.fetchall():
+        retDict["data"][row[0]] = row[1]
 
     conn.close()
-    # print(retDict)
     return json.dumps(retDict)
-
 
 # route makes it so when you go to that specific url it will render the index template
 @app.route("/")
