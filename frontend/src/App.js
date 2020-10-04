@@ -9,9 +9,7 @@ import {
 
 import {Dropdown} from 'semantic-ui-react';
 
-import ReactTable from "react-table";
-
-import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip, Layout, Alert} from 'antd';
+import {Row, Col, Menu, Table, Typography, Input, Tooltip, Layout, Alert} from 'antd';
 import {
     BrowserRouter as Router,
     Switch,
@@ -23,10 +21,9 @@ import About from "./About"
 
 import 'antd/dist/antd.css';
 
-const { Header, Footer, Sider, Content } = Layout;
-const { SubMenu } = Menu;
+const { Content } = Layout;
 const { Search } = Input;
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 
 const yearOptions = [
     {
