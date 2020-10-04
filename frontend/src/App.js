@@ -26,31 +26,6 @@ const { SubMenu } = Menu;
 const { Search } = Input;
 const { Title, Paragraph, Text } = Typography;
 
-
-
-// const mobile_columns = [
-//     {
-//         dataIndex: 'last_name',
-//         key: "last_name",
-//         title: 'Last Name',
-//         sorter: (a, b) => { return a.last_name.localeCompare(b.first_name)},
-//     },
-//     {
-//         dataIndex: 'first_name',
-//         key: "first_name",
-//         title: 'First Name',
-//         sorter: (a, b) => { return a.first_name.localeCompare(b.first_name)},
-//     },
-//     {
-//         dataIndex: 'comp',
-//         key: "comp",
-//         title: 'Compensation',
-//         render: text => <CurrencyFormat value={text} displayType={'text'} thousandSeparator={true} prefix={'$'} />,
-//         sorter: (a,b) =>  a.comp - b.comp ,
-//
-//     }
-// ];
-
 const menu = (
     <Menu>
         <Menu.Item key="0">
@@ -177,7 +152,6 @@ class App extends React.Component{
                     loading: false
                 })
             });
-            // console.log(v.value)
         }
     }
 
@@ -199,7 +173,6 @@ class App extends React.Component{
     }
 
     handleClick = e => {
-        // console.log('click ', e);
         this.setState({
             current: e.key,
         });
@@ -207,7 +180,6 @@ class App extends React.Component{
 
     handleSearchOnChange = searchText => {
         var keywords = searchText.target.value.toLowerCase().split(" ");
-        // console.log(keywords);
 
         const filteredEvents = this.state.year_data.filter(({ first_name, last_name, dept, group }) => {
             first_name = first_name.toLowerCase();
@@ -225,15 +197,12 @@ class App extends React.Component{
                 (group.includes(keywords[word]))
             }
 
-            // console.log(match)
             return match;
         });
     
         this.setState({
           data: filteredEvents
         });
-    
-        // console.log(filteredEvents)
     };
 
 
@@ -313,19 +282,6 @@ class App extends React.Component{
                 sorter: (a, b) => { return a.first_name.localeCompare(b.first_name)},
                 sortDirections: ['ascend', 'descend']
             },
-            // {
-            //     dataIndex: 'dept',
-            //     key: "dept",
-            //     title: 'Department',
-            //     filters: this.state.department_filters,
-            //     onFilter: (value, record) => {
-            //         // console.log(value, record)
-            //         return record.dept.indexOf(value) === 0
-            //     },
-            //     sorter: (a, b) => { return a.dept.localeCompare(b.dept)},
-            //     sortDirections: ['ascend', 'descend'],
-            //     render: text => text.replace(/&amp;/g, '&')
-            // },
             {
                 dataIndex: 'comp',
                 key: "comp",
@@ -337,7 +293,6 @@ class App extends React.Component{
             }
         ];
 
-        // console.log(columns);
         const handleClose = () => {
             this.setState({alertVisible: false});
         };
