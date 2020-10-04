@@ -95,7 +95,6 @@ class App extends React.Component{
             this.setState({year: v.value});
             this.setState({loading: true});
             axios.get(`/data/${v.value}`).then(res => {
-                // console.log(res.data);
                 this.setState({
                     data: res.data["data"],
                     year_data: res.data["data"],
@@ -110,10 +109,7 @@ class App extends React.Component{
     
 
     componentDidMount() {
-        // console.log("mounted")
-        console.log(`/data/${this.state.year}`)
         axios.get(`/data/${this.state.year}`).then(res => {
-            // console.log(res.data["departments"])
             this.setState({
                 data: res.data["data"],
                 year_data: res.data["data"],
@@ -189,7 +185,6 @@ class App extends React.Component{
                 title: 'Department',
                 filters: this.state.department_filters,
                 onFilter: (value, record) => {
-                    // console.log(value, record)
                     return record.dept.indexOf(value) === 0
                 },
                 sorter: (a, b) => { return a.dept.localeCompare(b.dept)},
