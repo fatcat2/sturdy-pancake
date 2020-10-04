@@ -11,7 +11,7 @@ import {Dropdown} from 'semantic-ui-react';
 
 import ReactTable from "react-table";
 
-import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip, Layout} from 'antd';
+import {Row, Col, Menu, Icon, Table, Typography, Input, Tooltip, Layout, Alert} from 'antd';
 import {
     BrowserRouter as Router,
     Switch,
@@ -149,8 +149,6 @@ function About(){
 
 class App extends React.Component{
     constructor(props){
-
-        // console.log("asdf")
         super(props);
         this.state = {
             year: 2019,
@@ -160,8 +158,11 @@ class App extends React.Component{
             group_filters: [{"text": "Faculty", "value": "Faculty"}],
             filtered: [],
             filterAll: '',
-            loading: true
+            loading: true,
+            alertVisible: true
         }
+
+        
 
         this.onChange = (e, v) => {
             this.setState({year: v.value});
@@ -179,6 +180,8 @@ class App extends React.Component{
             // console.log(v.value)
         }
     }
+
+    
 
     componentDidMount() {
         // console.log("mounted")
@@ -335,6 +338,9 @@ class App extends React.Component{
         ];
 
         // console.log(columns);
+        const handleClose = () => {
+            this.setState({alertVisible: false});
+        };
 
         return (
             <Router>
@@ -353,23 +359,31 @@ class App extends React.Component{
                             <About />
                         </Route>
                         <Route path="/">
-                        <div className="App-header">
-                        <Row>
-                            <Col>
-                                <Title>
-                                    Purdue Salary Guide for { ' ' }
-                                    <Tooltip placement="right" title={"Click me to change the year!"}>
-                                        <Dropdown
-                                            inline
-                                            options={yearOptions}
-                                            defaultValue={yearOptions[0].value}
-                                            onChange={this.onChange}
-                                        />
-                                    </Tooltip>
-                                </Title>
-                            </Col>
-                        </Row>
-                        </div>
+                            { this.state.alertVisible ? (<div>      
+                                <Row>
+                                    <Col xs={24} xl={{span: 18, offset: 3}} >
+                                        <Alert closable type="info" message="Mitch Daniels' compensation for 2020 will be $922,072.25, as reported by The Purdue Exponent" afterClose={handleClose}/>
+                                    </Col>
+                                </Row>
+                                <br />
+                            </div>) : null}
+                            <div className="App-header">
+                                <Row>
+                                    <Col>
+                                        <Title>
+                                            Purdue Salary Guide for { ' ' }
+                                            <Tooltip placement="right" title={"Click me to change the year!"}>
+                                                <Dropdown
+                                                    inline
+                                                    options={yearOptions}
+                                                    defaultValue={yearOptions[0].value}
+                                                    onChange={this.onChange}
+                                                />
+                                            </Tooltip>
+                                        </Title>
+                                    </Col>
+                                </Row>
+                            </div>
                         <Row>
                             <Col xs={24} xl={{span: 18, offset: 3}} >
                                 <section>
