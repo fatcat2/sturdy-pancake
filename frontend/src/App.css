@@ -23,6 +23,11 @@
   color: #09d3ac;
 }
 
+#alert{
+  padding-bottom: 10%;
+  padding: 2em;
+}
+
 .header {
   display: flex;
   justify-content: flex-end;
