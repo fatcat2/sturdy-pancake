@@ -2,6 +2,16 @@ import sqlite3
 import json
 from openpyxl import Workbook, load_workbook
 
+class Employee:
+    def __init__(self, first_name, middle_name, last_name, department, group, compensation):
+        self.first_name = first_name
+        self.middle_name = middle_name
+        self.last_name = last_name
+        self.department = department
+        self.group = group
+        self.compensation = compensation
+        self.long_text = f"{first_name} {last_name} in {department} in group {group} made ${compensation}"
+
 # gather file info
 year = input("Which year would you like to input?  ")
 maxRows = int(input("How many rows are in the file?   "))
@@ -26,7 +36,7 @@ print("Connected to excel sheet")
 # create le database
 print("Creating database for year " + year)
 conn.execute(f"drop table if exists Year{year}")
-conn.execute("create table Year"+year+" (lastName text, firstName text, middleName text, department text, empGroup text, compensation double)")
+conn.execute("create table Year"+year+" (lastName text, firstName text, middleName text, department text, empGroup text, compensation double, long_text text)")
 
 # populate le database
 print("Populating database for year " + year)
@@ -47,7 +57,13 @@ for row in sheet.iter_rows(min_row=2, min_col=1, max_row=maxRows, max_col=maxCol
     if a[groupCol] == "Student":
         continue
 
-    conn.execute("insert into Year"+year+" (lastName, firstName, middleName, department, empGroup, compensation) values (?, ?, ?, ?, ?, ?)", (a[lastNameCol], a[firstNameCol], a[middleNameCol], a[deptCol], a[groupCol], a[compCol],))
+    emp = Employee(a[firstNameCol], a[middleNameCol], a[lastNameCol], a[deptCol], a[groupCol], a[compCol])
+
+    conn.execute(
+        "insert into Year"+year+" (lastName, firstName, middleName, department, empGroup, compensation, long_text) values (?, ?, ?, ?, ?, ?, ?)",
+        (
+            emp.last_name, emp.first_name, emp.middle_name, emp.department, emp.group, emp.compensation, emp.long_text,)
+    )
 
 conn.commit()
 conn.close()
