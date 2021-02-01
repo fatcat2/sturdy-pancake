@@ -261,14 +261,6 @@ class App extends React.Component{
                             <About />
                         </Route>
                         <Route path="/">
-                            { this.state.alertVisible ? (<div>      
-                                <Row>
-                                    <Col xs={24} xl={{span: 18, offset: 3}} >
-                                        <Alert closable type="info" message="Mitch Daniels' compensation for 2020 will be $922,072.25, as reported by The Purdue Exponent" afterClose={handleClose}/>
-                                    </Col>
-                                </Row>
-                                <br />
-                            </div>) : null}
                             <div className="App-header">
                                 <Row>
                                     <Col>
