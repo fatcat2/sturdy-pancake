@@ -14,6 +14,8 @@ limit 10;
 select Year2020.firstName,
     Year2019.lastName,
     Year2020.department,
+    Year2019.compensation,
+    Year2020.compensation,
     Year2020.compensation - Year2019.compensation as movement,
     (Year2020.compensation - Year2019.compensation)/Year2019.compensation as increase
 from Year2020
