@@ -27,6 +27,11 @@ const { Title } = Typography;
 
 const yearOptions = [
     {
+        key: '2020',
+        text: '2020',
+        value: '2020',
+    },
+    {
         key: '2019',
         text: '2019',
         value: '2019',
@@ -78,7 +83,7 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            year: 2019,
+            year: 2020,
             data: [{ "key": 1, "last_name": "Aasand", "first_name": "Hardin", "middle_name": "", "dept": "FW - 2Engl Ling", "group": "Faculty", "comp": 123924.12, "description": "Hardin Aasand in the department of FW - 2Engl Ling and in employee group Faculty was paid 123924.12 last year."}, ],
             year_data: [{ "key": 1, "last_name": "Aasand", "first_name": "Hardin", "middle_name": "", "dept": "FW - 2Engl Ling", "group": "Faculty", "comp": 123924.12, "description": "Hardin Aasand in the department of FW - 2Engl Ling and in employee group Faculty was paid 123924.12 last year."}, ],
             department_filters: [{"text": "FW - 2Engl Ling", "value": "FW - 2Engl Ling"}, {"text": "Money", "value": "Money"}],
