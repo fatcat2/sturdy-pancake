@@ -5,10 +5,10 @@ import { Col, Row, Typography } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
-function About(){
+function About() {
     return (
         <Row>
-            <Col xs={{span:22, offset: 1}} xl={{span: 18, offset: 3}} >
+            <Col xs={{ span: 22, offset: 1 }} xl={{ span: 18, offset: 3 }} >
                 <Typography>
                     <Paragraph>
                         This is an online database containing salary information for Purdue employees
@@ -24,7 +24,7 @@ function About(){
                     <Paragraph>
                         If you're interested in looking at the code and source data, hit up the GitHub repo. Excel sheets
                         containing the salary data can be found in the <a href="https://github.com/fatcat2/sturdy-pancake">GitHub repo</a>. You can get the JSON for a specific year
-                        by submitting a HTTP request to 
+                        by submitting a HTTP request to
                         <Text code={true}>
                             https://salary.ryanjchen.com/data/"insert year".
                         </Text>
@@ -36,7 +36,7 @@ function About(){
                     </Paragraph>
                 </Typography>
             </Col>
-         </Row>
+        </Row>
     )
 }
 
