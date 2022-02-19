@@ -260,7 +260,7 @@ def picker_data(year):
 
     end_index = 10 if len(all_results) >= 10 else len(all_results)
 
-    retDict["data"] = all_results[:end_index]
+    retDict["data"] = all_results
 
 
 
