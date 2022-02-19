@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import axios from "axios";
+import axios from "axios"
 import CurrencyFormat from 'react-currency-format';
 import {
     BrowserView,
@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 
 import About from "./About"
+import Viz from "./Viz"
 
 import 'antd/dist/antd.css';
 
@@ -26,6 +27,11 @@ const { Search } = Input;
 const { Title } = Typography;
 
 const yearOptions = [
+    {
+        key: '2021',
+        text: '2021',
+        value: '2021',
+    },
     {
         key: '2020',
         text: '2020',
@@ -83,7 +89,7 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            year: 2020,
+            year: 2021,
             data: [{ "key": 1, "last_name": "Aasand", "first_name": "Hardin", "middle_name": "", "dept": "FW - 2Engl Ling", "group": "Faculty", "comp": 123924.12, "description": "Hardin Aasand in the department of FW - 2Engl Ling and in employee group Faculty was paid 123924.12 last year."}, ],
             year_data: [{ "key": 1, "last_name": "Aasand", "first_name": "Hardin", "middle_name": "", "dept": "FW - 2Engl Ling", "group": "Faculty", "comp": 123924.12, "description": "Hardin Aasand in the department of FW - 2Engl Ling and in employee group Faculty was paid 123924.12 last year."}, ],
             department_filters: [{"text": "FW - 2Engl Ling", "value": "FW - 2Engl Ling"}, {"text": "Money", "value": "Money"}],
@@ -264,6 +270,9 @@ class App extends React.Component{
                     <Switch>
                         <Route path="/about">
                             <About />
+                        </Route>
+                        <Route path="/viz">
+                            <Viz/>
                         </Route>
                         <Route path="/">
                             <div className="App-header">
