@@ -1,47 +1,63 @@
 import React, { useEffect, useState, forwardRef } from "react";
 
 
-import { Button, Card, Divider, Group, Text, Badge, Container, Grid, Select, useMantineTheme, TextInput, Table, Checkbox } from '@mantine/core';
+import { Button, Card, Divider, Group, Text, Badge, Container, Grid, Select, useMantineTheme } from '@mantine/core';
 
 import axios from "axios"
 
 
 const SelectItem = forwardRef(
    ({ image, label, description, ...others }, ref) => (
-     <div ref={ref} {...others}>
-       <Group noWrap>
-         <div>
-           <Text>{label}</Text>
-           <Text size="xs" color="dimmed">
-             {description}
-           </Text>
-         </div>
-       </Group>
-     </div>
+      <div ref={ref} {...others}>
+         <Group noWrap>
+            <div>
+               <Text>{label}</Text>
+               <Text size="xs" color="dimmed">
+                  {description}
+               </Text>
+            </div>
+         </Group>
+      </div>
    )
- );
+);
+
+function Salary(props) {
+   const theme = useMantineTheme();
+
+   const secondaryColor = theme.colorScheme === 'dark'
+      ? theme.colors.dark[1]
+      : theme.colors.gray[7];
+   return (
+         <Card shadow="sm" padding="sm">
+            <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
+               <Text weight={500}>{props.firstName} {props.lastName}</Text>
+            </Group>
+
+            <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
+               Group: {props.group}
+               Department: {props.department}
+               Compensation: {props.compensation}
+            </Text>
+
+         </Card>
+   )
+}
 
 function Viz() {
 
-   const [yearList, setYearList] = useState([{"value": 2011, "label": "2011"}])
+   const [yearList, setYearList] = useState([{ "value": 2011, "label": "2011" }])
    const [year, setYear] = useState(-1);
-   let elements = [{
-      "value": "na",
-      "label": "Search limit reached.",
-      "description": "Be more specific to load more results.",
-      "disabled": true
-   }];
-
-   let test = elements.map((element) => (
-      <tr key={element.label}>
-        <td>{element.label}</td>
-        <td>{element.description}</td>
-        <td><Checkbox size="lg" id={element.labe}/></td>
-      </tr>
-    ));
-  
-   const [data, setData] = useState(test
+   const [selected, setSelected] = useState();
+   const [data, setData] = useState(
+      [
+         {
+            "value": "test",
+            "label": "this",
+            "description": "out"
+         }
+      ]
    );
+   const [selectedSalaries, setSalaries] = useState();
 
    const eleven_data = {
       "value": "na",
@@ -50,8 +66,6 @@ function Viz() {
       "disabled": true
    }
 
-   const [searchData, setSearchData] = useState([eleven_data])
-
    useEffect(() => {
       let mounted = true
       axios.get(`/data/years`).then(res => {
@@ -59,7 +73,7 @@ function Viz() {
 
          let yearData = []
 
-         for(var value in res.data.years){
+         for (var value in res.data.years) {
             yearData.push({
                "value": res.data.years[value],
                "label": res.data.years[value].toString()
@@ -71,55 +85,41 @@ function Viz() {
 
          if (mounted) setYearList(yearData);
 
-         return () => {mounted = false}
+         return () => { mounted = false }
       });
 
       let mounted2 = true
-      if(year != -1) {
-         
+      if (year != -1) {
+
       }
 
    }, [])
 
-   const onYearChange = function(year) {
+   const onYearChange = function (year) {
       setYear(year)
       console.log(year)
       axios.get(`/data/picker/${year}`).then(res => {
-         let tmpData = res.data.data.map((element) => (
-            <tr key={element.label}>
-              <td>{element.label}</td>
-              <td>{element.description}</td>
-            </tr>
-          ));
-        
-         setData(tmpData);
+         console.log(res.data)
+         let tmpData = res.data.data;
+         tmpData.push(eleven_data);
+         setData(tmpData)
       });
    }
 
-   const onInputChange = function(event) {
-      let query = event.currentTarget.value;
-      const params = {
-         "query": query
-      };
+   const onInputChange = function (event) {
+      setSelected(event)
+   }
 
-      axios.get(`/data/picker/${year}`, {params}).then(res => {
-         let tmpData = res.data.data.map((element) => (
-            <tr key={element.label}>
-              <td>{element.label}</td>
-              <td>{element.description}</td>
-            </tr>
-          ));
-        
-         setData(tmpData);
-      })
+   const addSalary = function () {
+
    }
 
 
-  const theme = useMantineTheme();
+   const theme = useMantineTheme();
 
    const secondaryColor = theme.colorScheme === 'dark'
-    ? theme.colors.dark[1]
-    : theme.colors.gray[7];
+      ? theme.colors.dark[1]
+      : theme.colors.gray[7];
 
    return (
       <>
@@ -136,51 +136,28 @@ function Viz() {
                   />
                </Grid.Col>
                <Grid.Col span={8}>
-               <TextInput
-                     label="2. Search an employee"
-                     placeholder="Search one"
+                  <Select
+                     label="2. Pick the employee"
+                     placeholder="Pick one"
+                     searchable
+                     clearable
+                     itemComponent={SelectItem}
+                     data={data}
                      onChange={onInputChange}
+                     limit={10}
                   />
                </Grid.Col>
                <Grid.Col span={12}>
-               <Button variant="filled" fullWidth color="yellow" radius="lg">Add</Button>
+                  <Button variant="filled" fullWidth color="yellow" radius="lg" onClick={addSalary}>Add</Button>
                </Grid.Col>
                <Grid.Col span={12}>
-                  <Table highlightOnHover>
-                     <thead>
-                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Select</th>
-                     </tr>
-                     </thead>
-                     <tbody>{data}</tbody>
-                  </Table>
+                  <Divider />
                </Grid.Col>
                <Grid.Col span={12}>
-               <Divider />
+                  <h2>Selected employees</h2>
                </Grid.Col>
-               <Grid.Col span={12}>
-               <h2>Selected employees</h2>
-               </Grid.Col>
-               <Grid.Col span={12}>
-               <Card shadow="sm" padding="sm">
-                  <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                     <Text weight={500}>Norway Fjord Adventures</Text>
-                     <Badge color="pink" variant="light">
-                        On Sale
-                     </Badge>
-                  </Group>
-
-                  <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
-                     With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                     activities on and around the fjords of Norway
-                  </Text>
-
-                  <Button variant="light" color="blue" fullWidth style={{ marginTop: 14 }}>
-                     Book classic tour now
-                  </Button>
-                  </Card>
+               <Grid.Col span={4}>
+                  <Salary firstName={"Ryan"} lastName={"Chen"} compensation={123456} />
                </Grid.Col>
             </Grid>
          </Container>
