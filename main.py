@@ -224,6 +224,7 @@ def createPickerData(row, query):
             "description": f"Group: {row[4]}//Dept: {row[3]}//Comp: {row[5]}",
             "value": {
                 "value": row[0],
+                "last_name": row[0],
                 "first_name": row[1],
                 "middle_name": row[2],
                 "dept": row[3],

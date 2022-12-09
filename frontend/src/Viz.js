@@ -35,7 +35,10 @@ function Salary(props) {
 
             <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
                Group: {props.group}
-               Department: {props.department}
+	   </Text>
+            <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
+               Department: {props.department}</Text>
+            <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
                Compensation: {props.compensation}
             </Text>
 
@@ -57,7 +60,16 @@ function Viz() {
          }
       ]
    );
-   const [selectedSalaries, setSalaries] = useState();
+
+	const default_data = {
+		"value": "chen",
+		"first_name": "ryan",
+		"compensation": "12312312312",
+		"department": "your",
+		"group": "mom"
+	}
+
+   const [selectedSalaries, setSalaries] = useState([default_data]);
 
    const eleven_data = {
       "value": "na",
@@ -99,19 +111,22 @@ function Viz() {
       setYear(year)
       console.log(year)
       axios.get(`/data/picker/${year}`).then(res => {
-         console.log(res.data)
          let tmpData = res.data.data;
          tmpData.push(eleven_data);
          setData(tmpData)
+		  console.log(tmpData);
       });
    }
 
    const onInputChange = function (event) {
-      setSelected(event)
+      setSelected(event);
+	   console.log(event);
    }
 
-   const addSalary = function () {
-
+   const addSalary = function (event) {
+	   console.log("oof");
+	   setSalaries([...selectedSalaries, selected]);
+	   console.log(selectedSalaries);
    }
 
 
@@ -120,6 +135,10 @@ function Viz() {
    const secondaryColor = theme.colorScheme === 'dark'
       ? theme.colors.dark[1]
       : theme.colors.gray[7];
+
+	var salaryColumns = selectedSalaries.map(function (salary) {
+		return <Salary key={salary.compensation+salary.last_name} firstName={salary.first_name} lastName={salary.last_name} group={salary.group} department={salary.dept} compensation={salary.comp}/>
+	});
 
    return (
       <>
@@ -154,16 +173,15 @@ function Viz() {
                   <Divider />
                </Grid.Col>
                <Grid.Col span={12}>
-                  <h2>Selected employees</h2>
+                  <h2>selected employees</h2>
                </Grid.Col>
                <Grid.Col span={4}>
-                  <Salary firstName={"Ryan"} lastName={"Chen"} compensation={123456} />
+					{ salaryColumns }
                </Grid.Col>
             </Grid>
          </Container>
       </>
    )
 }
-
 
 export default Viz;
