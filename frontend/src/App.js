@@ -19,6 +19,7 @@ import {
 
 import About from "./About"
 import Viz from "./Viz"
+import Ranges from "./Ranges"
 
 import 'antd/dist/antd.css';
 
@@ -268,6 +269,9 @@ class App extends React.Component {
                             </Route>
                             <Route path="/viz">
                                 <Viz />
+                            </Route>
+                            <Route path="/ranges">
+                                <Ranges/>
                             </Route>
                             <Route path="/">
                                 <div className="App-header">

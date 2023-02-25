@@ -335,6 +335,23 @@ def dataPie(year):
     conn.close()
     return jsonify(retDict)
 
+@app.route("/data/ranges/<year>")
+def dataRanges(year):
+    """Returns the averages, mins, and max compensations for each employee group and department."""
+    conn = sqlite3.connect("data/salaries.db")
+    c = conn.cursor()
+    c.execute(
+        f"select department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} group by department;"
+    )
+
+    res = [row for row in c.fetchall()]
+    print(res)
+
+    return jsonify(res)
+
+    # retDict = {}
+    # retDict["departments"] = []
+
 
 @app.route("/")
 def hello():
