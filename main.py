@@ -337,7 +337,7 @@ def dataRanges(year):
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute(
-        f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} group by campus, department;"
+        f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} where compensation > 15000 group by campus, department;"
     )
 
     department_result = [{
@@ -378,8 +378,6 @@ def dataRanges(year):
         "groups": group_result,
         "combined": combined_result
     })
-
-
 
 
 @app.route("/")
