@@ -30,6 +30,16 @@ const { Title } = Typography;
 
 const yearOptions = [
   {
+    key: "2023",
+    text: "2023",
+    value: "2023",
+  },
+  {
+    key: "2022",
+    text: "2022",
+    value: "2022",
+  },
+  {
     key: "2021",
     text: "2021",
     value: "2021",
@@ -90,7 +100,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: 2021,
+      year: 2023,
       data: [
         {
           key: 1,
@@ -312,7 +322,7 @@ class App extends React.Component {
           <br />
           <div>
             <Switch>
-              <Route path="/about">
+                            <Route path="/about">
                 <About />
               </Route>
               <Route path="/viz">

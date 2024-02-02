@@ -8,14 +8,12 @@ import os
 import sqlite3
 import json
 import statistics
-from flask_cors import CORS, cross_origin
 app = Flask(__name__, template_folder="frontend/build",
             static_folder="frontend/build/static")
 
-cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-years = range(2011, 2022)
+years = range(2011, 2023)
 
 groupIndex = {}
 departmentIndex = {}
@@ -53,14 +51,14 @@ class Salary:
 
     def get_map(self):
         return {
-            "last_name": self.last_name,
-            "first_name": self.first_name,
-            "middle_name": self.middle_name,
-            "dept": self.dept,
-            "group": self.group,
-            "comp": self.comp,
-            "long_text": self.long_text
-        }
+                "last_name": self.last_name,
+                "first_name": self.first_name,
+                "middle_name": self.middle_name,
+                "dept": self.dept,
+                "group": self.group,
+                "comp": self.comp,
+                "long_text": self.long_text
+                }
 
 
 @app.route("/favicon.ico")
@@ -151,11 +149,11 @@ def query():
     median_comp = statistics.median(comps)
 
     stats = {
-        "max_comp": max_comp,
-        "min_comp": min_comp,
-        "mean_comp": mean_comp,
-        "median": median_comp
-    }
+            "max_comp": max_comp,
+            "min_comp": min_comp,
+            "mean_comp": mean_comp,
+            "median": median_comp
+            }
 
     metadata = {"count": count, "request_params": {**request.args}}
 
@@ -186,7 +184,7 @@ def treemap():
         data.append({
             "name": dept,
             "comp": sum([salary["comp"] for salary in result_rows if salary["dept"] == dept])
-        })
+            })
 
     returnData = {"data": sorted(data, key=lambda row: row["comp"])}
 
@@ -199,8 +197,8 @@ def years_route():
     c = conn.cursor()
     c.execute("select * from years")
     ret_body = {
-        "years": [row[0] for row in c.fetchall()]
-    }
+            "years": [row[0] for row in c.fetchall()]
+            }
 
     conn.close()
 
@@ -212,23 +210,22 @@ def createPickerData(row, query):
                      None and len(row[2]) > 0 else "") + " " + row[0]
 
     return {
-        "label": name,
-        "description": f"Group: {row[4]}//Dept: {row[3]}//Comp: {row[5]}",
-        "value": {
-            "value": row[0],
-            "last_name": row[0],
-            "first_name": row[1],
-            "middle_name": row[2],
-            "dept": row[3],
-            "group": row[4],
-            "comp": row[5],
-            "long_text": row[6]
-        }
-    }
+            "label": name,
+            "description": f"Group: {row[4]}//Dept: {row[3]}//Comp: {row[5]}",
+            "value": {
+                "value": row[0],
+                "last_name": row[0],
+                "first_name": row[1],
+                "middle_name": row[2],
+                "dept": row[3],
+                "group": row[4],
+                "comp": row[5],
+                "long_text": row[6]
+                }
+            }
 
 
 @app.route("/data/picker/<year>")
-@cross_origin
 def picker_data(year):
     tableName = "Year"+year
     department_table = f"Department{year}"
@@ -238,7 +235,7 @@ def picker_data(year):
 
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
-    c.execute("select * from "+tableName)
+    c.execute("select * from "+tableName+" limit 15") 
 
     retDict = {}
     all_results = []
@@ -253,17 +250,17 @@ def picker_data(year):
 
     retDict["data"] = all_results
 
-    c.execute("select * from " + department_table + " order by name asc")
+    c.execute("select * from " + department_table + " order by department asc limit 15")
     retDict["departments"] = [{
         "text": row[0],
         "value": row[0],
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
-    c.execute("select * from " + group_table + " order by name asc")
+    c.execute("select * from " + group_table + " order by empGroup asc limit 15")
     retDict["groups"] = [{
         "text": row[0],
         "value": row[0],
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     conn.close()
     return jsonify(retDict)
@@ -285,22 +282,22 @@ def react_data(year):
         "group": row[4],
         "comp": row[5],
         "long_text": row[6]
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     # c.execute("select * from " + department_table + " order by name asc")
     c.execute(
-        f"select distinct name from (select campus || ' - ' || department as name from {tableName}) order by name asc")
+            f"select distinct name from (select campus || ' - ' || department as name from {tableName}) order by name asc")
     retDict["departments"] = [{
         "text": row[0],
         "value": row[0],
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     c.execute(
-        f"select distinct empGroup from {tableName} order by empGroup asc")
+            f"select distinct empGroup from {tableName} order by empGroup asc")
     retDict["groups"] = [{
         "text": row[0],
         "value": row[0],
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     conn.close()
     return jsonify(retDict)
@@ -313,7 +310,7 @@ def dataPie(year):
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute(
-        f"select name, sum(compensation) from Department{year} join Year{year} on name=department group by name")
+            f"select name, sum(compensation) from Department{year} join Year{year} on name=department group by name")
 
     retDict = {}
     retDict["year"] = year
@@ -326,7 +323,6 @@ def dataPie(year):
     return jsonify(retDict)
 
 
-@cross_origin
 @app.route("/data/ranges/<year>")
 def dataRanges(year):
     """Returns the averages, mins, and max compensations for each employee group and department."""
@@ -337,8 +333,8 @@ def dataRanges(year):
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
     c.execute(
-        f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} where compensation > 15000 group by campus, department;"
-    )
+            f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} where compensation > 15000 group by campus, department;"
+            )
 
     department_result = [{
         "campus": row[0],
@@ -347,11 +343,11 @@ def dataRanges(year):
         "averageSalary": row[3],
         "maxSalary": row[4],
         "count": row[5]
-    }for row in c.fetchall()]
+        }for row in c.fetchall()]
 
     c.execute(
-        f"select campus, empGroup, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup;"
-    )
+            f"select campus, empGroup, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup;"
+            )
 
     group_result = [{
         "campus": row[0],
@@ -359,11 +355,11 @@ def dataRanges(year):
         "minSalary": row[2],
         "averageSalary": row[3],
         "maxSalary": row[4]
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     c.execute(
-        f"select campus, empGroup, department, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup, department;"
-    )
+            f"select campus, empGroup, department, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup, department;"
+            )
     combined_result = [{
         "campus": row[0],
         "group": row[1],
@@ -371,13 +367,13 @@ def dataRanges(year):
         "minSalary": row[3],
         "averageSalary": row[4],
         "maxSalary": row[5]
-    } for row in c.fetchall()]
+        } for row in c.fetchall()]
 
     return jsonify({
         "departments": department_result,
         "groups": group_result,
         "combined": combined_result
-    })
+        })
 
 
 @app.route("/")

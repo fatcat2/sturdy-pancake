@@ -28,8 +28,8 @@ compCol = int(input("What column is the compensation in?   "))
 
 # declare variables to be used
 print("Connecting to database")
-# conn = sqlite3.connect("../data/salaries.db")
-conn = sqlite3.connect("./salaries-test.db")
+conn = sqlite3.connect("../data/salaries.db")
+#conn = sqlite3.connect("./salaries-test.db")
 print("Connected to ../data/salaries.db")
 print("Connecting to ../excel/"+year+".xlsx")
 filename = "../excel/" + year + ".xlsx"
