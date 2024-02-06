@@ -154,7 +154,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/data/${this.state.year}`).then((res) => {
+    axios.get(`/data/2023`).then((res) => {
       this.setState({
         data: res.data["data"],
         year_data: res.data["data"],
