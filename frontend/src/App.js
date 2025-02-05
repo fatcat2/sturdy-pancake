@@ -30,6 +30,11 @@ const { Title } = Typography;
 
 const yearOptions = [
   {
+    key: "2024",
+    text: "2024",
+    value: "2024",
+  },
+  {
     key: "2023",
     text: "2023",
     value: "2023",
@@ -100,7 +105,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: 2023,
+      year: 2024,
       data: [
         {
           key: 1,
@@ -154,7 +159,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/data/2023`).then((res) => {
+    axios.get(`/data/2024`).then((res) => {
       this.setState({
         data: res.data["data"],
         year_data: res.data["data"],
@@ -186,7 +191,7 @@ class App extends React.Component {
         let description = dept + " " + group;
 
         return name.includes(keywords) || description.includes(keywords);
-      }
+      },
     );
 
     this.setState({
@@ -322,7 +327,7 @@ class App extends React.Component {
           <br />
           <div>
             <Switch>
-                            <Route path="/about">
+              <Route path="/about">
                 <About />
               </Route>
               <Route path="/viz">

@@ -1,12 +1,15 @@
 import sqlite3
-years = [year for year in range(2011, 2023)]
+
+years = [2024]
 
 conn = sqlite3.connect("../data/salaries.db")
 
 c = conn.cursor()
 
 for year in years:
-    c.execute(f"CREATE TABLE Department{year} AS SELECT DISTINCT department FROM Year{year}")
+    c.execute(
+        f"CREATE TABLE Department{year} AS SELECT DISTINCT department FROM Year{year}"
+    )
     c.execute(f"CREATE TABLE Group{year} AS SELECT DISTINCT empGroup FROM Year{year}")
     c.execute(f"CREATE TABLE Campu{year} AS SELECT DISTINCT campus FROM Year{year}")
 
