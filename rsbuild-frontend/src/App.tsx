@@ -1,12 +1,14 @@
 import './App.css';
 import React from 'react';
 import Table from './Table';
+import { Menu } from './Menu';
 
 const App = () => {
   return (
-    <div className="flex flex-col">
-      <div className="basis-full bg-gray-900 text-white">
-        <p className="text-3xl pt-2 pb-2 px-2">pu-salary-guide</p>
+    <div className="flex flex-col justify-items-center">
+      <Menu />
+      <div className="flex-row justify-items-center mt-4 basis-5/6">
+        <p className="text-5xl font-semibold ">Purdue Salary Guide for 2024</p>
       </div>
       <div className="justify-items-center basis-full">
         <Table />

@@ -6,7 +6,9 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   PaginationState,
+  SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 
@@ -74,6 +76,8 @@ function Table() {
     pageSize: 10,
   });
 
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const numberFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -120,9 +124,13 @@ function Table() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+
     state: {
       pagination,
+      sorting,
     },
   });
 
@@ -133,7 +141,7 @@ function Table() {
   }, [year]);
 
   return (
-    <div className="max-w-full py-10 flex-row justify-items-center ">
+    <div className="max-w-full pt-5 flex-row justify-items-center ">
       <table className="border border-collapse rounded-lg basis-3/4 w-5/6 border-tools-table-outline border-gray-300 table-fixed text-sm">
         <thead className="">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -141,7 +149,8 @@ function Table() {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className=" bg-gray-100 px-5 py-5 border border-gray-300"
+                  className=" bg-gray-100 px-5 py-5 border border-gray-300 hover:bg-gray-300 cursor-pointer transition-colors"
+                  onClick={header.column.getToggleSortingHandler()}
                 >
                   {header.isPlaceholder
                     ? null
@@ -156,7 +165,7 @@ function Table() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className="hover:bg-sky-100 transition-colors">
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}

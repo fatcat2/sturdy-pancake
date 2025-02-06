@@ -3,10 +3,16 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [pluginReact()],
+  html: {
+    template: './static/index.html',
+  },
 });
 
 module.exports = {
   module: {
+    html: {
+      template: './static/index.html',
+    },
     rules: [
       {
         test: /\.css$/,
