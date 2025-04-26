@@ -1,42 +1,26 @@
-@import '~antd/dist/antd.css';
+@import "semantic-ui-css/semantic.min.css";
 
-.App {
+body {
+  margin: 0;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.content {
+  display: flex;
+  min-height: 100vh;
+  line-height: 1.1;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  /* background-color: #282c34; */
-  /*min-height: 100vh;*/
-  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  /* font-size: calc(2vmin); */
-  /* color: white; */
 }
 
-.App-link {
-  color: #09d3ac;
+.content h1 {
+  font-size: 3.6rem;
+  font-weight: 700;
 }
 
-#alert{
-  padding-bottom: 10%;
-  padding: 2em;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.content p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.5;
 }
