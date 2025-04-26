@@ -32,7 +32,7 @@ interface EmployeeData {
   dept: string;
   group: string;
   comp: number;
-  description: string;
+  long_text: string;
 }
 
 interface FilterOption {
@@ -50,6 +50,7 @@ const App = () => {
   const [groupFilters, setGroupFilters] = useState<FilterOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState("home");
+  const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
 
   useEffect(() => {
     fetchData(CURRENT_YEAR);
@@ -89,6 +90,14 @@ const App = () => {
       }
     );
     setData(filteredEvents);
+  };
+
+  const handleExpand = (expanded: boolean, record: EmployeeData) => {
+    if (expanded) {
+      setExpandedRowKeys([record.key]);
+    } else {
+      setExpandedRowKeys([]);
+    }
   };
 
   const columns: TableColumnType<EmployeeData>[] = [
@@ -265,9 +274,24 @@ const App = () => {
                             loading={loading}
                             columns={mobileColumns}
                             dataSource={data}
-                            expandedRowRender={(record) => (
-                              <p style={{ margin: 0 }}>{record.description}</p>
-                            )}
+                            expandable={{
+                              expandedRowRender: (record: EmployeeData) => (
+                                <p style={{ margin: 0 }}>{record.long_text}</p>
+                              ),
+                              rowExpandable: (record: EmployeeData) =>
+                                record.long_text !== null,
+                              onExpandedRowsChange: (
+                                expandedRowKeys: string[]
+                              ) => {
+                                console.log(expandedRowKeys);
+                              },
+                              onExpand: (
+                                expanded: boolean,
+                                record: EmployeeData
+                              ) => {
+                                console.log(expanded, record);
+                              },
+                            }}
                             size="small"
                           />
                         </MobileView>
