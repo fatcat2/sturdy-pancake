@@ -299,6 +299,7 @@ def react_data(year):
             "group": row[4],
             "comp": row[5],
             "long_text": row[6],
+            "key": f"{row[0]}-{row[1]}-{row[2]}-{row[5]}",
         }
         for row in c.fetchall()
     ]
