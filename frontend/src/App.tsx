@@ -280,17 +280,6 @@ const App = () => {
                               ),
                               rowExpandable: (record: EmployeeData) =>
                                 record.long_text !== null,
-                              onExpandedRowsChange: (
-                                expandedRowKeys: string[]
-                              ) => {
-                                console.log(expandedRowKeys);
-                              },
-                              onExpand: (
-                                expanded: boolean,
-                                record: EmployeeData
-                              ) => {
-                                console.log(expanded, record);
-                              },
                             }}
                             size="small"
                           />
