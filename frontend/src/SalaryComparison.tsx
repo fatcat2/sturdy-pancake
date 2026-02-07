@@ -14,7 +14,10 @@ import {
   Empty,
   Spin,
 } from "antd";
+import { FilePdfOutlined } from "@ant-design/icons";
 import type { TableColumnType } from "antd";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 import { CURRENT_YEAR, START_YEAR } from "./constants";
 
 const { Title, Text } = Typography;
@@ -235,6 +238,73 @@ const SalaryComparison: React.FC = () => {
     },
   ];
 
+  const formatCurrency = (value: number | undefined): string => {
+    if (value == null) return "--";
+    return "$" + value.toLocaleString("en-US", { minimumFractionDigits: 0 });
+  };
+
+  const exportToPdf = useCallback(() => {
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.setFontSize(18);
+    doc.text("Salary Comparison Report", 14, 22);
+
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Years: ${availableYears[0]} - ${availableYears[availableYears.length - 1]}`, 14, 30);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 36);
+
+    // Split years into two halves
+    const midpoint = Math.ceil(availableYears.length / 2);
+    const firstHalfYears = availableYears.slice(0, midpoint);
+    const secondHalfYears = availableYears.slice(midpoint);
+
+    // First table: Name, Department, first half of years
+    const headers1 = ["Name", "Department", ...firstHalfYears.map(String)];
+    const rows1 = comparisonData.map((row) => [
+      row.name,
+      row.dept,
+      ...firstHalfYears.map((yr) => formatCurrency(row[`year_${yr}`] as number | undefined)),
+    ]);
+
+    autoTable(doc, {
+      head: [headers1],
+      body: rows1,
+      startY: 42,
+      styles: { fontSize: 9, cellPadding: 3 },
+      headStyles: { fillColor: [24, 144, 255] },
+      columnStyles: {
+        0: { cellWidth: 50 },
+        1: { cellWidth: 45 },
+      },
+    });
+
+    // Second table: Name, second half of years, Total Change
+    const headers2 = ["Name", ...secondHalfYears.map(String), "Total Change"];
+    const rows2 = comparisonData.map((row) => [
+      row.name,
+      ...secondHalfYears.map((yr) => formatCurrency(row[`year_${yr}`] as number | undefined)),
+      row.change != null
+        ? `${row.change >= 0 ? "+" : ""}${formatCurrency(row.change as number)} (${(row.changePercent as number)?.toFixed(1)}%)`
+        : "--",
+    ]);
+
+    const finalY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY;
+
+    autoTable(doc, {
+      head: [headers2],
+      body: rows2,
+      startY: finalY + 10,
+      styles: { fontSize: 9, cellPadding: 3 },
+      headStyles: { fillColor: [24, 144, 255] },
+      columnStyles: {
+        0: { cellWidth: 50 },
+      },
+    });
+
+    doc.save("salary-comparison.pdf");
+  }, [comparisonData, availableYears]);
+
   return (
     <Row>
       <Col xs={24} xl={{ span: 18, offset: 3 }}>
@@ -326,7 +396,18 @@ const SalaryComparison: React.FC = () => {
         )}
 
         {!loading && comparisonData.length > 0 && (
-          <Card title="Comparison Results">
+          <Card
+            title="Comparison Results"
+            extra={
+              <Button
+                type="primary"
+                icon={<FilePdfOutlined />}
+                onClick={exportToPdf}
+              >
+                Export PDF
+              </Button>
+            }
+          >
             <Table
               bordered
               columns={columns}
