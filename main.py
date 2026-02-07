@@ -465,9 +465,9 @@ def compare_salaries():
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
 
-    # Get available years
-    c.execute("select * from years")
-    available_years = sorted([row[0] for row in c.fetchall()])
+    # Get available years from Year* table names
+    c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'Year%'")
+    available_years = sorted([int(row[0].replace("Year", "")) for row in c.fetchall()])
 
     salary_history = []
 
