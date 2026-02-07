@@ -2,10 +2,24 @@
 # https://hub.docker.com/_/python
 FROM python:3.9-slim
 
+# Install Node.js and yarn for frontend build
+RUN apt-get update && apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copy local code to the container image.
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
+
+# Build frontend
+WORKDIR $APP_HOME/frontend
+RUN yarn install --frozen-lockfile && yarn build
+
+# Back to app root
+WORKDIR $APP_HOME
 
 # Install production dependencies.
 ENV PYTHONUNBUFFERED True
