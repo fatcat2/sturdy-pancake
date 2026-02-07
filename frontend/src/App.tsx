@@ -18,6 +18,7 @@ import type { TableColumnType } from "antd";
 import type { Key } from "react";
 import "./App.css";
 import About from "./About";
+import SalaryComparison from "./SalaryComparison";
 import { CURRENT_YEAR, YEAR_OPTIONS } from "./constants";
 
 const { Content } = Layout;
@@ -213,6 +214,9 @@ const App = () => {
         <Menu.Item key="home">
           <Link to="/">pu-salary-guide</Link>
         </Menu.Item>
+        <Menu.Item key="compare">
+          <Link to="/compare">Compare</Link>
+        </Menu.Item>
         <Menu.Item key="about">
           <Link to="/about">About</Link>
         </Menu.Item>
@@ -223,6 +227,7 @@ const App = () => {
         <div>
           <Routes>
             <Route path="/about" element={<About />} />
+            <Route path="/compare" element={<SalaryComparison />} />
             <Route
               path="/"
               element={

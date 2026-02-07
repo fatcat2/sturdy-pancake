@@ -77,6 +77,11 @@ def about():
     return render_template("index.html")
 
 
+@app.route("/compare")
+def compare_page():
+    return render_template("index.html")
+
+
 def validateYear(year):
     try:
         y = int(year)
@@ -411,6 +416,85 @@ def dataRanges(year):
             "combined": combined_result,
         }
     )
+
+
+@app.route("/data/compare/search")
+def compare_search():
+    """Search for employees by name to add to comparison."""
+    query = request.args.get("query", "").strip()
+    year = request.args.get("year", "2024")
+
+    if not query or len(query) < 2:
+        return jsonify({"results": []})
+
+    tableName = f"Year{year}"
+    conn = sqlite3.connect("data/salaries.db")
+    c = conn.cursor()
+
+    c.execute(
+        f"select distinct firstName, middleName, lastName, department, campus from {tableName} "
+        "where lower(firstName || ' ' || lastName) like ? "
+        "or lower(lastName || ', ' || firstName) like ? "
+        "limit 20",
+        (f"%{query.lower()}%", f"%{query.lower()}%"),
+    )
+
+    results = [
+        {
+            "first_name": row[0],
+            "middle_name": row[1] or "",
+            "last_name": row[2],
+            "dept": (row[4] + " - " + row[3]) if row[4] else row[3],
+        }
+        for row in c.fetchall()
+    ]
+
+    conn.close()
+    return jsonify({"results": results})
+
+
+@app.route("/data/compare")
+def compare_salaries():
+    """Compare salary data for selected employees across all years."""
+    first_name = request.args.get("first_name", "")
+    last_name = request.args.get("last_name", "")
+
+    if not first_name or not last_name:
+        return jsonify({"error": "first_name and last_name are required"}), 400
+
+    conn = sqlite3.connect("data/salaries.db")
+    c = conn.cursor()
+
+    # Get available years
+    c.execute("select * from years")
+    available_years = sorted([row[0] for row in c.fetchall()])
+
+    salary_history = []
+
+    for yr in available_years:
+        tableName = f"Year{yr}"
+        try:
+            c.execute(
+                f"select firstName, middleName, lastName, department, empGroup, compensation, campus "
+                f"from {tableName} where firstName=? and lastName=?",
+                (first_name, last_name),
+            )
+            rows = c.fetchall()
+            for row in rows:
+                salary_history.append({
+                    "year": yr,
+                    "first_name": row[0],
+                    "middle_name": row[1] or "",
+                    "last_name": row[2],
+                    "dept": (row[6] + " - " + row[3]) if row[6] else row[3],
+                    "group": row[4],
+                    "comp": row[5],
+                })
+        except Exception:
+            continue
+
+    conn.close()
+    return jsonify({"data": salary_history, "years": available_years})
 
 
 @app.route("/")
