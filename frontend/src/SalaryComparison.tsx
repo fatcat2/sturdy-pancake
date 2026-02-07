@@ -244,6 +244,11 @@ const SalaryComparison: React.FC = () => {
             Search for employees and compare their salaries across years (
             {START_YEAR}-{CURRENT_YEAR}).
           </Text>
+          <br />
+          <Text type="secondary">
+            Note: Results may be inaccurate if multiple employees share the same
+            name. This tool also does not account for name changes.
+          </Text>
         </div>
 
         <Card
