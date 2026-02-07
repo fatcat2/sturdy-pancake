@@ -153,8 +153,8 @@ const SalaryComparison: React.FC = () => {
             (r) => r.year === lastYear
           )?.comp;
           if (firstComp && lastComp) {
-            row.change = lastComp - firstComp;
-            row.changePercent = ((lastComp - firstComp) / firstComp) * 100;
+            row.change = Math.round((lastComp - firstComp) * 100) / 100;
+            row.changePercent = Math.round(((lastComp - firstComp) / firstComp) * 10000) / 100;
           }
         }
 
