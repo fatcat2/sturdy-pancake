@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import axios from "axios";
 import CurrencyFormat from "react-currency-format";
 import { BrowserView, MobileView } from "react-device-detect";
@@ -39,6 +39,41 @@ interface FilterOption {
   text: string;
   value: string;
 }
+
+const mobileColumns: TableColumnType<EmployeeData>[] = [
+  {
+    dataIndex: "last_name",
+    key: "last_name",
+    title: "Last Name",
+    sorter: (a: EmployeeData, b: EmployeeData) =>
+      a.last_name.localeCompare(b.last_name),
+    sortDirections: ["ascend", "descend"] as const,
+  },
+  {
+    dataIndex: "first_name",
+    key: "first_name",
+    title: "First Name",
+    sorter: (a: EmployeeData, b: EmployeeData) =>
+      a.first_name.localeCompare(b.first_name),
+    sortDirections: ["ascend", "descend"] as const,
+  },
+  {
+    dataIndex: "comp",
+    key: "comp",
+    title: "Compensation",
+    render: (text: number) => (
+      <CurrencyFormat
+        value={text}
+        displayType={"text"}
+        thousandSeparator={true}
+        prefix={"$"}
+      />
+    ),
+    sorter: (a: EmployeeData, b: EmployeeData) => a.comp - b.comp,
+    defaultSortOrder: "descend",
+    sortDirections: ["ascend", "descend"] as const,
+  },
+];
 
 const App = () => {
   const [year, setYear] = useState(CURRENT_YEAR);
@@ -80,17 +115,24 @@ const App = () => {
     setCurrent(e.key);
   };
 
-  const handleSearchOnChange = (searchText: any) => {
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleSearchOnChange = useCallback((searchText: React.ChangeEvent<HTMLInputElement>) => {
     const keywords = searchText.target.value.toLowerCase();
-    const filteredEvents = yearData.filter(
-      ({ first_name, last_name, dept, group }) => {
-        const name = `${first_name.toLowerCase()} ${last_name.toLowerCase()}`;
-        const description = `${dept.toLowerCase()} ${group.toLowerCase()}`;
-        return name.includes(keywords) || description.includes(keywords);
-      }
-    );
-    setData(filteredEvents);
-  };
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+    debounceTimer.current = setTimeout(() => {
+      const filteredEvents = yearData.filter(
+        ({ first_name, last_name, dept, group }) => {
+          const name = `${first_name.toLowerCase()} ${last_name.toLowerCase()}`;
+          const description = `${dept.toLowerCase()} ${group.toLowerCase()}`;
+          return name.includes(keywords) || description.includes(keywords);
+        }
+      );
+      setData(filteredEvents);
+    }, 300);
+  }, [yearData]);
 
   const handleExpand = (expanded: boolean, record: EmployeeData) => {
     if (expanded) {
@@ -100,7 +142,7 @@ const App = () => {
     }
   };
 
-  const columns: TableColumnType<EmployeeData>[] = [
+  const columns: TableColumnType<EmployeeData>[] = useMemo(() => [
     {
       dataIndex: "last_name",
       key: "last_name",
@@ -164,42 +206,7 @@ const App = () => {
       defaultSortOrder: "descend",
       sortDirections: ["ascend", "descend"] as const,
     },
-  ];
-
-  const mobileColumns: TableColumnType<EmployeeData>[] = [
-    {
-      dataIndex: "last_name",
-      key: "last_name",
-      title: "Last Name",
-      sorter: (a: EmployeeData, b: EmployeeData) =>
-        a.last_name.localeCompare(b.last_name),
-      sortDirections: ["ascend", "descend"] as const,
-    },
-    {
-      dataIndex: "first_name",
-      key: "first_name",
-      title: "First Name",
-      sorter: (a: EmployeeData, b: EmployeeData) =>
-        a.first_name.localeCompare(b.first_name),
-      sortDirections: ["ascend", "descend"] as const,
-    },
-    {
-      dataIndex: "comp",
-      key: "comp",
-      title: "Compensation",
-      render: (text: number) => (
-        <CurrencyFormat
-          value={text}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-        />
-      ),
-      sorter: (a: EmployeeData, b: EmployeeData) => a.comp - b.comp,
-      defaultSortOrder: "descend",
-      sortDirections: ["ascend", "descend"] as const,
-    },
-  ];
+  ], [departmentFilters, groupFilters]);
 
   return (
     <BrowserRouter>
