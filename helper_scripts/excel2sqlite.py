@@ -56,7 +56,7 @@ for row in sheet.iter_rows(min_row=2, min_col=1, max_row=maxRows, max_col=maxCol
     if a[firstNameCol] == None:
         a[firstNameCol] = ""
     if a[middleNameCol] == None:
-        a[middleNameCol] == None
+        a[middleNameCol] = None
 
     # make sure to skip students (only a 2016.xlsx problem)
     if a[groupCol] == "Student":

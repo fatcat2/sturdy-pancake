@@ -1,5 +1,3 @@
 Flask
 gunicorn
-pymongo
 openpyxl
-dnspython
