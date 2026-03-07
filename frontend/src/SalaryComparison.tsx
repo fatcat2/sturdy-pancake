@@ -142,6 +142,10 @@ const SalaryComparison: React.FC = () => {
           row.group = record.group;
         }
 
+        // Calculate total compensation across all years
+        const totalComp = matchingRecords.reduce((sum, r) => sum + r.comp, 0);
+        row.totalComp = Math.round(totalComp * 100) / 100;
+
         // Calculate overall change
         const sortedYears = matchingRecords
           .map((r) => r.year)
@@ -211,6 +215,24 @@ const SalaryComparison: React.FC = () => {
     },
     ...yearColumns,
     {
+      title: "Total Comp",
+      dataIndex: "totalComp",
+      key: "totalComp",
+      render: (value: number | undefined) =>
+        value != null ? (
+          <CurrencyFormat
+            value={value}
+            displayType="text"
+            thousandSeparator
+            prefix="$"
+          />
+        ) : (
+          <Text type="secondary">--</Text>
+        ),
+      sorter: (a: ComparisonRow, b: ComparisonRow) =>
+        ((a.totalComp as number) || 0) - ((b.totalComp as number) || 0),
+    },
+    {
       title: "Total Change",
       dataIndex: "change",
       key: "change",
@@ -279,11 +301,12 @@ const SalaryComparison: React.FC = () => {
       },
     });
 
-    // Second table: Name, second half of years, Total Change
-    const headers2 = ["Name", ...secondHalfYears.map(String), "Total Change"];
+    // Second table: Name, second half of years, Total Comp, Total Change
+    const headers2 = ["Name", ...secondHalfYears.map(String), "Total Comp", "Total Change"];
     const rows2 = comparisonData.map((row) => [
       row.name,
       ...secondHalfYears.map((yr) => formatCurrency(row[`year_${yr}`] as number | undefined)),
+      formatCurrency(row.totalComp as number | undefined),
       row.change != null
         ? `${row.change >= 0 ? "+" : ""}${formatCurrency(row.change as number)} (${(row.changePercent as number)?.toFixed(1)}%)`
         : "--",
