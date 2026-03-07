@@ -104,3 +104,5 @@ ENV/
 .tar.bz2
 
 /static/node_modules
+
+.planning
