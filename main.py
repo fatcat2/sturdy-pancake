@@ -406,21 +406,35 @@ def dataRanges(year):
 def compare_search():
     """Search for employees by name to add to comparison."""
     query = request.args.get("query", "").strip()
-    year = request.args.get("year", "2025")
 
     if not query or len(query) < 2:
         return jsonify({"results": []})
 
-    tableName = f"Year{year}"
     conn = sqlite3.connect("data/salaries.db")
     c = conn.cursor()
 
+    # Search across all years to find employees (including former employees)
+    # Use a union of all year tables, prioritizing recent years for department info
+    union_queries = []
+    for year in sorted(years, reverse=True):
+        union_queries.append(
+            f"SELECT firstName, middleName, lastName, department, campus, {year} as data_year "
+            f"FROM Year{year} "
+            f"WHERE lower(firstName || ' ' || lastName) LIKE ? "
+            f"OR lower(lastName || ', ' || firstName) LIKE ?"
+        )
+
+    # Build the full query with UNION ALL
+    full_query = " UNION ALL ".join(union_queries)
+    params = [f"%{query.lower()}%", f"%{query.lower()}%"] * len(years)
+
+    # Wrap in a subquery to get distinct employees, keeping most recent department
     c.execute(
-        f"select distinct firstName, middleName, lastName, department, campus from {tableName} "
-        "where lower(firstName || ' ' || lastName) like ? "
-        "or lower(lastName || ', ' || firstName) like ? "
-        "limit 20",
-        (f"%{query.lower()}%", f"%{query.lower()}%"),
+        f"SELECT firstName, middleName, lastName, department, campus FROM ({full_query}) "
+        "GROUP BY firstName, middleName, lastName "
+        "ORDER BY data_year DESC "
+        "LIMIT 20",
+        params,
     )
 
     results = [
