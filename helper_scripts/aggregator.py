@@ -1,6 +1,6 @@
 import sqlite3
 
-years = [2024]
+years = [2025]
 
 conn = sqlite3.connect("../data/salaries.db")
 

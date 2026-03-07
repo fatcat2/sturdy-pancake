@@ -1,4 +1,4 @@
-export const CURRENT_YEAR = 2024;
+export const CURRENT_YEAR = 2025;
 export const START_YEAR = 2011;
 
 export const YEAR_OPTIONS = Array.from(
