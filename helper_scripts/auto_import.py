@@ -198,7 +198,13 @@ def main():
         print("No Excel files found to process")
         sys.exit(1)
 
-    print(f"Found {len(excel_files)} Excel file(s) to process")
+    # If no specific years requested, only process the newest year
+    if specific_years is None:
+        newest_year = max(excel_files.keys())
+        excel_files = {newest_year: excel_files[newest_year]}
+        print(f"Processing newest year only: {newest_year}")
+    else:
+        print(f"Found {len(excel_files)} Excel file(s) to process")
     print(f"Database: {db_path}")
     print()
 

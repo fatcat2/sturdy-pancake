@@ -17,7 +17,7 @@ app = Flask(
 
 app.config["CORS_HEADERS"] = "Content-Type"
 
-years = range(2011, 2023)
+years = range(2011, 2026)
 
 groupIndex = {}
 departmentIndex = {}
@@ -88,7 +88,7 @@ def validateYear(year):
     except:
         return False
 
-    if int(year) not in range(2011, 2021):
+    if int(year) not in range(2011, 2026):
         return False
 
     return True
@@ -97,7 +97,7 @@ def validateYear(year):
 def queryBuilder(args):
     department = args.get("department", "")
     group = args.get("group", "")
-    year = args.get("year", "2020")
+    year = args.get("year", "2025")
     maxComp = int(args.get("max_comp", -1))
     minComp = int(args.get("min_comp", 0))
 
@@ -422,7 +422,7 @@ def dataRanges(year):
 def compare_search():
     """Search for employees by name to add to comparison."""
     query = request.args.get("query", "").strip()
-    year = request.args.get("year", "2024")
+    year = request.args.get("year", "2025")
 
     if not query or len(query) < 2:
         return jsonify({"results": []})
@@ -467,7 +467,7 @@ def compare_salaries():
 
     # Get available years from Year* table names
     c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'Year%'")
-    available_years = sorted([int(row[0].replace("Year", "")) for row in c.fetchall()])
+    available_years = sorted([int(row[0].replace("Year", "")) for row in c.fetchall() if row[0].startswith("Year")])
 
     salary_history = []
 
