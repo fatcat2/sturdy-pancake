@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**/*.py'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'Dockerfile'
   workflow_dispatch:
 
 env:
