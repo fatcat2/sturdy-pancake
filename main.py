@@ -1,8 +1,7 @@
 # imports are listed below
 from contextlib import closing
-from venv import create
 
-from flask import Flask, request, url_for, jsonify, abort, Response
+from flask import Flask, request, jsonify, abort
 from flask import render_template, send_from_directory
 import os
 import sqlite3
@@ -17,7 +16,7 @@ app = Flask(
 
 app.config["CORS_HEADERS"] = "Content-Type"
 
-years = range(2011, 2023)
+years = range(2011, 2025)
 
 groupIndex = {}
 departmentIndex = {}
@@ -88,7 +87,7 @@ def validateYear(year):
     except:
         return False
 
-    if int(year) not in range(2011, 2021):
+    if int(year) not in years:
         return False
 
     return True
@@ -111,8 +110,6 @@ def queryBuilder(args):
     conditionals = []
     query_args = []
 
-    print(departmentIndex[year])
-
     if len(department) > 0 and department in departmentIndex[year]:
         conditionals.append("department=?")
         query_args.append(department)
@@ -133,9 +130,6 @@ def queryBuilder(args):
         base_query += " where "
         conditional = " and ".join(conditionals)
         base_query += conditional
-        print(conditionals)
-
-    print(base_query)
 
     return base_query, tuple(query_args)
 
@@ -152,18 +146,21 @@ def query():
 
     count = len(result_rows)
 
-    comps = [x["comp"] for x in result_rows]
-    max_comp = max(comps)
-    min_comp = min(comps)
-    mean_comp = sum(comps) / count
-    median_comp = statistics.median(comps)
-
-    stats = {
-        "max_comp": max_comp,
-        "min_comp": min_comp,
-        "mean_comp": mean_comp,
-        "median": median_comp,
-    }
+    if count > 0:
+        comps = [x["comp"] for x in result_rows]
+        stats = {
+            "max_comp": max(comps),
+            "min_comp": min(comps),
+            "mean_comp": sum(comps) / count,
+            "median": statistics.median(comps),
+        }
+    else:
+        stats = {
+            "max_comp": 0,
+            "min_comp": 0,
+            "mean_comp": 0,
+            "median": 0,
+        }
 
     metadata = {"count": count, "request_params": {**request.args}}
 
@@ -182,22 +179,14 @@ def treemap():
             results = cursor.execute(query, query_args)
             result_rows = [Salary(*row).get_map() for row in results.fetchall()]
 
-    count = len(result_rows)
-
-    depts = set([res["dept"] for res in result_rows])
-    data = []
-
-    for dept in depts:
+    dept_totals = {}
+    for row in result_rows:
+        dept = row["dept"]
         if "WL - " not in dept:
             continue
-        data.append(
-            {
-                "name": dept,
-                "comp": sum(
-                    [salary["comp"] for salary in result_rows if salary["dept"] == dept]
-                ),
-            }
-        )
+        dept_totals[dept] = dept_totals.get(dept, 0) + row["comp"]
+
+    data = [{"name": dept, "comp": comp} for dept, comp in dept_totals.items()]
 
     returnData = {"data": sorted(data, key=lambda row: row["comp"])}
 
@@ -206,12 +195,10 @@ def treemap():
 
 @app.route("/data/years")
 def years_route():
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute("select * from years")
-    ret_body = {"years": [row[0] for row in c.fetchall()]}
-
-    conn.close()
+    with closing(sqlite3.connect("data/salaries.db")) as conn:
+        with closing(conn.cursor()) as c:
+            c.execute("select * from years")
+            ret_body = {"years": [row[0] for row in c.fetchall()]}
 
     return jsonify(ret_body)
 
@@ -248,109 +235,106 @@ def picker_data(year):
 
     query = request.args.get("query")
 
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute("select * from " + tableName + " limit 15")
+    with closing(sqlite3.connect("data/salaries.db")) as conn:
+        with closing(conn.cursor()) as c:
+            c.execute("select * from " + tableName + " limit 15")
 
-    retDict = {}
-    all_results = []
+            retDict = {}
+            all_results = []
 
-    for row in c.fetchall():
-        person = createPickerData(row, query)
+            for row in c.fetchall():
+                person = createPickerData(row, query)
 
-        if query is not None and query in person["label"]:
-            all_results.append(person)
-        elif query is None:
-            all_results.append(person)
+                if query is not None and query in person["label"]:
+                    all_results.append(person)
+                elif query is None:
+                    all_results.append(person)
 
-    retDict["data"] = all_results
+            retDict["data"] = all_results
 
-    c.execute("select * from " + department_table + " order by department asc limit 15")
-    retDict["departments"] = [
-        {
-            "text": row[0],
-            "value": row[0],
-        }
-        for row in c.fetchall()
-    ]
+            c.execute("select * from " + department_table + " order by department asc limit 15")
+            retDict["departments"] = [
+                {
+                    "text": row[0],
+                    "value": row[0],
+                }
+                for row in c.fetchall()
+            ]
 
-    c.execute("select * from " + group_table + " order by empGroup asc limit 15")
-    retDict["groups"] = [
-        {
-            "text": row[0],
-            "value": row[0],
-        }
-        for row in c.fetchall()
-    ]
+            c.execute("select * from " + group_table + " order by empGroup asc limit 15")
+            retDict["groups"] = [
+                {
+                    "text": row[0],
+                    "value": row[0],
+                }
+                for row in c.fetchall()
+            ]
 
-    conn.close()
     return jsonify(retDict)
 
 
 @app.route("/data/<year>")
 def react_data(year):
     tableName = "Year" + year
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute("select * from " + tableName)
 
-    retDict = {}
-    retDict["data"] = [
-        {
-            "last_name": row[0],
-            "first_name": row[1],
-            "middle_name": row[2],
-            "dept": row[7] + " - " + row[3],
-            "group": row[4],
-            "comp": row[5],
-            "long_text": row[6],
-            "key": f"{row[0]}-{row[1]}-{row[2]}-{row[5]}",
-        }
-        for row in c.fetchall()
-    ]
+    with closing(sqlite3.connect("data/salaries.db")) as conn:
+        with closing(conn.cursor()) as c:
+            c.execute("select * from " + tableName)
 
-    # c.execute("select * from " + department_table + " order by name asc")
-    c.execute(
-        f"select distinct name from (select campus || ' - ' || department as name from {tableName}) order by name asc"
-    )
-    retDict["departments"] = [
-        {
-            "text": row[0],
-            "value": row[0],
-        }
-        for row in c.fetchall()
-    ]
+            retDict = {}
+            retDict["data"] = [
+                {
+                    "last_name": row[0],
+                    "first_name": row[1],
+                    "middle_name": row[2],
+                    "dept": row[7] + " - " + row[3],
+                    "group": row[4],
+                    "comp": row[5],
+                    "long_text": row[6],
+                    "key": f"{row[0]}-{row[1]}-{row[2]}-{row[5]}",
+                }
+                for row in c.fetchall()
+            ]
 
-    c.execute(f"select distinct empGroup from {tableName} order by empGroup asc")
-    retDict["groups"] = [
-        {
-            "text": row[0],
-            "value": row[0],
-        }
-        for row in c.fetchall()
-    ]
+            c.execute(
+                f"select distinct name from (select campus || ' - ' || department as name from {tableName}) order by name asc"
+            )
+            retDict["departments"] = [
+                {
+                    "text": row[0],
+                    "value": row[0],
+                }
+                for row in c.fetchall()
+            ]
 
-    conn.close()
+            c.execute(f"select distinct empGroup from {tableName} order by empGroup asc")
+            retDict["groups"] = [
+                {
+                    "text": row[0],
+                    "value": row[0],
+                }
+                for row in c.fetchall()
+            ]
+
     return jsonify(retDict)
 
 
 @app.route("/data/<year>/departments")
 def dataPie(year):
     """Returns the departments and compensations for the year."""
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute(
-        f"select name, sum(compensation) from Department{year} join Year{year} on name=department group by name"
-    )
+    with closing(sqlite3.connect("data/salaries.db")) as conn:
+        with closing(conn.cursor()) as c:
+            c.execute(
+                f"select name, sum(compensation) from Department{year} join Year{year} on name=department group by name"
+            )
 
-    retDict = {}
-    retDict["year"] = year
-    retDict["data"] = {}
+            retDict = {}
+            retDict["year"] = year
+            retDict["data"] = {}
 
-    for row in c.fetchall():
-        retDict["data"][row[0]] = row[1]
+            for row in c.fetchall():
+                retDict["data"][row[0]] = row[1]
 
-    conn.close()
     return jsonify(retDict)
 
 
@@ -361,53 +345,53 @@ def dataRanges(year):
     if int(year) not in years:
         return abort(404)
 
-    conn = sqlite3.connect("data/salaries.db")
-    c = conn.cursor()
-    c.execute(
-        f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} where compensation > 15000 group by campus, department;"
-    )
+    with closing(sqlite3.connect("data/salaries.db")) as conn:
+        with closing(conn.cursor()) as c:
+            c.execute(
+                f"select campus, department, min(compensation), avg(compensation), max(compensation), count(department) from Year{year} where compensation > 15000 group by campus, department;"
+            )
 
-    department_result = [
-        {
-            "campus": row[0],
-            "department": row[1],
-            "minSalary": row[2],
-            "averageSalary": row[3],
-            "maxSalary": row[4],
-            "count": row[5],
-        }
-        for row in c.fetchall()
-    ]
+            department_result = [
+                {
+                    "campus": row[0],
+                    "department": row[1],
+                    "minSalary": row[2],
+                    "averageSalary": row[3],
+                    "maxSalary": row[4],
+                    "count": row[5],
+                }
+                for row in c.fetchall()
+            ]
 
-    c.execute(
-        f"select campus, empGroup, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup;"
-    )
+            c.execute(
+                f"select campus, empGroup, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup;"
+            )
 
-    group_result = [
-        {
-            "campus": row[0],
-            "group": row[1],
-            "minSalary": row[2],
-            "averageSalary": row[3],
-            "maxSalary": row[4],
-        }
-        for row in c.fetchall()
-    ]
+            group_result = [
+                {
+                    "campus": row[0],
+                    "group": row[1],
+                    "minSalary": row[2],
+                    "averageSalary": row[3],
+                    "maxSalary": row[4],
+                }
+                for row in c.fetchall()
+            ]
 
-    c.execute(
-        f"select campus, empGroup, department, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup, department;"
-    )
-    combined_result = [
-        {
-            "campus": row[0],
-            "group": row[1],
-            "department": row[2],
-            "minSalary": row[3],
-            "averageSalary": row[4],
-            "maxSalary": row[5],
-        }
-        for row in c.fetchall()
-    ]
+            c.execute(
+                f"select campus, empGroup, department, min(compensation), avg(compensation), max(compensation) from Year{year} where compensation > 15000 group by campus, empGroup, department;"
+            )
+            combined_result = [
+                {
+                    "campus": row[0],
+                    "group": row[1],
+                    "department": row[2],
+                    "minSalary": row[3],
+                    "averageSalary": row[4],
+                    "maxSalary": row[5],
+                }
+                for row in c.fetchall()
+            ]
 
     return jsonify(
         {

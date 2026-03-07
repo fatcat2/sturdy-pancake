@@ -11,7 +11,7 @@ for year in years:
         f"CREATE TABLE Department{year} AS SELECT DISTINCT department FROM Year{year}"
     )
     c.execute(f"CREATE TABLE Group{year} AS SELECT DISTINCT empGroup FROM Year{year}")
-    c.execute(f"CREATE TABLE Campu{year} AS SELECT DISTINCT campus FROM Year{year}")
+    c.execute(f"CREATE TABLE Campus{year} AS SELECT DISTINCT campus FROM Year{year}")
 
 conn.commit()
 conn.close()
