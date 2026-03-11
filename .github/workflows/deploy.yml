@@ -52,6 +52,13 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           region: ${{ env.REGION }}
           image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          flags: >-
+            --memory=256Mi
+            --cpu=1
+            --min-instances=0
+            --max-instances=3
+            --cpu-throttling
+            --concurrency=80
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
