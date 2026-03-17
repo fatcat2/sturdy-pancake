@@ -9,7 +9,7 @@ export default defineConfig({
       {
         tag: "script",
         attrs: {
-          src: "https://umami.torrtle.co/umami.js",
+          src: "https://umami.torrtle.co/script.js",
           "data-website-id": "1d97a601-d42e-4262-b48e-a8f00ed4fb7b",
           async: true,
           defer: true,
