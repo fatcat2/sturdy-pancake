@@ -2,11 +2,6 @@ name: Deploy to Cloud Run
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version (e.g. v1.2.0)'
-        required: true
-        type: string
 
 env:
   PROJECT_ID: purdue-salary-guide
@@ -60,9 +55,23 @@ jobs:
             --cpu-throttling
             --concurrency=80
 
+      - name: Get next version
+        id: version
+        run: |
+          git fetch --tags
+          LATEST=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
+          if [ -z "$LATEST" ]; then
+            echo "next=v1.0.0" >> "$GITHUB_OUTPUT"
+          else
+            MAJOR=$(echo "$LATEST" | cut -d. -f1)
+            MINOR=$(echo "$LATEST" | cut -d. -f2)
+            PATCH=$(echo "$LATEST" | cut -d. -f3)
+            echo "next=${MAJOR}.${MINOR}.$((PATCH + 1))" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.version }}
-          name: ${{ inputs.version }}
+          tag_name: ${{ steps.version.outputs.next }}
+          name: ${{ steps.version.outputs.next }}
           generate_release_notes: true
