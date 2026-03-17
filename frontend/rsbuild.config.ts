@@ -4,6 +4,7 @@ import { pluginReact } from "@rsbuild/plugin-react";
 export default defineConfig({
   plugins: [pluginReact()],
   html: {
+    title: "💰 Purdue Salary Guide",
     tags: [
       {
         tag: "script",
